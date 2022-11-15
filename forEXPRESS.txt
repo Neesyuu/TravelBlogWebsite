@@ -1,0 +1,4 @@
+npm init
+> create index.js file
+npm install express --save
+nodemon index.js
