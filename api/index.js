@@ -8,7 +8,7 @@ const { checkUser } = require('./middleware/authMiddleware');
 require('dotenv').config();
 const app = express();
 
-const port = 3000;
+const port = 5000;
 
 mongoose.connect(process.env.DBURI).catch((err)=>console.log(err));
 

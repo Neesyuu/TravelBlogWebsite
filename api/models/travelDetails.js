@@ -21,9 +21,6 @@ const travelSchema = mongoose.Schema({
     },
     author: {
         type: String
-    },
-    edited: {
-        type: String
     }
 });
 

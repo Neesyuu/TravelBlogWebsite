@@ -1,0 +1,65 @@
+.sub_title{
+    text-align: center;
+}
+
+.formBg{
+    background-color: grey;
+    margin: 0px 50px;
+    padding: 30px 0px;
+    position: relative;
+}
+
+.formBg .closeBTN{
+    position: absolute;
+    right: 10px;
+    top: -10px;
+}
+
+.form{
+    margin: 0px 50px;
+}
+
+.form textarea{
+    width: 100%;
+    height: 200px;
+}
+
+.form .subDescription{
+    width: 100%;
+    display: flex;
+}
+
+.form .subDescription .subDes1{
+    width: 70%;
+}
+
+.form .subDescription .subDes2{
+    width: 30%;
+    text-align: center;
+}
+
+.form .subDescription .subDes1 .subDes1p1, .form .subDescription .subDes1 .subDes1p2{
+    display: flex;
+    margin: 10px 0px;;
+}
+
+.subDes1p1 .titleName{
+    width: 10%;
+}
+
+.subDes1p1 .textBox{
+    width: 90%;
+}
+
+.subDes1p2 .titleName1, .subDes1p2 .titleName2{
+    width: 10%;
+}
+
+.subDes1p2 .textBox1, .subDes1p2 .textBox2{
+    width: 40%;
+}
+
+.submitBtn{
+    text-align: center;
+    margin: 5px;
+}

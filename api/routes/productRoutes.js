@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { requireAuth, roleCheck } = require('../middleware/authMiddleware');
-const {createUser, loginUser, logoutUser} = require('../controllers/authController');
+const { requireAuth, roleCheck, fetchUser, checkUser } = require('../middleware/authMiddleware');
+const {createUser, loginUser, logoutUser, getUser} = require('../controllers/authController');
 const {returnAllTravelDetails, returnSingleTravelDetails, createTravel, updateTravel, deleteTravel} = require('../controllers/travelDetailsController');
 
 router.get('/', (req, res)=>{
@@ -17,6 +17,7 @@ router.get('/', (req, res)=>{
 router.post('/api/signup', createUser);
 router.post('/api/login', loginUser);
 router.get('/api/logout', logoutUser);
+router.get('/api/getUser', fetchUser, getUser);
 
 router.get('/api/TravelDetails', returnAllTravelDetails);
 router.post('/api/TravelDetails', requireAuth, roleCheck, createTravel);

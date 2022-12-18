@@ -1,0 +1,62 @@
+.titleDiv{
+    text-align: center;
+}
+
+.content{    
+    width: 83%;
+    margin: 0px 7%;
+}
+
+.commentDiv{
+    margin: 50px 0;
+}
+
+.commentBoxBG{
+    background-color: grey;
+    /* display: flex; */
+    padding: 20px;
+}
+
+.commentBoxContent{
+    display: flex;
+}
+
+.commentBoxL{
+    width: 30%;
+}
+
+.commentBoxR{
+    width: 70%;
+}
+
+.commentBoxL .inputDiv{
+    margin: 10px 0;
+}
+
+.commentBoxL .inputDiv input{
+    width: 90%;
+}
+
+.commentBoxR .inputDiv{
+    margin: 10px 0;
+}
+
+.commentBoxR .inputDiv textarea{
+    width: 99%;
+    height: 65px
+}
+
+.commentBoxBTN{
+    text-align: center;
+}
+
+.eachComment{
+    background-color: grey;
+    padding: 10px 20px;
+    margin: 20px 0;
+}
+
+.eachComment p{
+    font-size: 20px;
+}
+

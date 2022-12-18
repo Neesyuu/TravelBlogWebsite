@@ -23,13 +23,31 @@ const checkUser = (req, res, next)=>{
         jwt.verify(token, process.env.JWT_SECRET, async(err, decoded)=>{
             if(err) next();
             const user = await User.findById(decoded.user);
-            res.locals.user = user;            
+            res.locals.user = user;        
             next();
         })
     }else{
         next();
     }
 }
+
+
+const fetchUser = (req, res, next)=>{
+    const token = req.header('token');
+    // const {jwt: token} = req.cookies;
+    if(token){
+        try{
+            const data = jwt.verify(token, process.env.JWT_SECRET);
+            req.user = data.user;
+            next();
+        }catch(error){
+            res.status(401).send({ error: "Please authenticate using a valid token" });
+        }
+    }else{
+        res.status(401).send({ error: "Please authenticate using a valid token" });
+    }
+}
+
 
 const roleCheck = (req, res, next)=>{
     const {jwt: token} = req.cookies;
@@ -51,4 +69,4 @@ const roleCheck = (req, res, next)=>{
 };
 
 
-module.exports = {requireAuth, checkUser, roleCheck};
+module.exports = {requireAuth, checkUser, roleCheck, fetchUser};
