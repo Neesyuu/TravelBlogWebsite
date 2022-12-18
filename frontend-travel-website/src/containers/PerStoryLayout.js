@@ -1,21 +1,63 @@
 import React from 'react';
-import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./css/PerStory.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPerStory } from '../store/slices/perStorySlice';
+import { fetchComment } from '../store/slices/commentSlice';
+import { useState } from 'react';
 
 function PerStoryLayout() {
-    const { storyID } = useParams();
-    
+    const { storyID } = useParams();   
 
     const dispatch = useDispatch();
     const { isLoading, isError, data } = useSelector(state => state.perStory);
+    const { isCLoading, isCError, cData } = useSelector(state => state.comment);
 
     useEffect(()=>{
         dispatch(fetchPerStory(storyID));
+        dispatch(fetchComment(storyID));
+        // eslint-disable-next-line
     },[])
+
+    const [commentBox, setCommentBox] = useState({
+        'fullname': '',
+        'email': '',
+        'userComment': ''
+    });
+
+    const onChange = (e)=>{
+        setCommentBox({ ...commentBox , [e.target.name]: [e.target.value]});
+    }
+
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        const host = "http://localhost:5000";
+        const res = await fetch(`${host}/api/comment`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            travelId: storyID,
+            fullname: commentBox.fullname[0],
+            email: commentBox.email[0],
+            userComment: commentBox.userComment[0],
+            display: true,
+        }),
+        });
+        const jsonData = await res.json();
+
+        if (jsonData) {
+            console.log("Comment Success");
+            dispatch(fetchComment(storyID));
+            setCommentBox({
+                'fullname': '',
+                'email': '',
+                'userComment': ''
+            })
+        }
+    }
 
 
   return (
@@ -48,44 +90,49 @@ function PerStoryLayout() {
         <div className="commentDiv">
             <div className="commentBox">
                 <h3>Leave a Comment</h3>
-                <div className="commentBoxBG">
-                    <div className="commentBoxContent">
-                        <div className="commentBoxL">
-                            <div className="inputDiv">
-                                <span>Full Name</span>
-                                <br/>
-                                <input/>
+                <form onSubmit={handleSubmit}>
+                    <div className="commentBoxBG">
+                        <div className="commentBoxContent">
+                            <div className="commentBoxL">
+                                <div className="inputDiv">
+                                    <span>Full Name</span>
+                                    <br/>
+                                    <input name='fullname' value={commentBox.fullname} onChange={onChange}/>
+                                </div>
+                                <div className="inputDiv">
+                                    <span>Email</span>
+                                    <br/>
+                                    <input type='email' name='email' value={commentBox.email} onChange={onChange}/>
+                                </div>
                             </div>
-                            <div className="inputDiv">
-                                <span>Email</span>
-                                <br/>
-                                <input/>
+                            <div className="commentBoxR">
+                                <div className="inputDiv">
+                                    <span>Comment</span>
+                                    <br/>
+                                    <textarea name='userComment' value={commentBox.userComment} onChange={onChange}></textarea>
+                                </div>
                             </div>
                         </div>
-                        <div className="commentBoxR">
-                            <div className="inputDiv">
-                                <span>Comment</span>
-                                <br/>
-                                <textarea></textarea>
-                            </div>
+                        <div className="commentBoxBTN">
+                            <button style={{textAlign: "center"}}>Submit</button>
                         </div>
                     </div>
-                    <div className="commentBoxBTN">
-                        <button style={{textAlign: "center"}}>Submit</button>
-                    </div>
-                </div>
+                </form>
             </div>
             <div className="commentLists">
                 <h3>Comments</h3>
-                <div className="eachComment">
-                    <p>hello world</p>
-                    <span>By Writer</span>
-                </div>
-
-                <div className="eachComment">
-                    <p>hello world</p>
-                    <span>By Writer</span>
-                </div>
+                {isCLoading && <h1>Loading ... </h1>}
+                {!isCLoading && isCError && <h1>!! Error Occured !!</h1>}
+                {!isCLoading && !isCError && cData &&
+                cData.map((comment, index)=>{
+                    return(
+                        <div className="eachComment" key={index}>
+                            <p>{comment.userComment}</p>
+                            <span>By {comment.fullname}</span>
+                        </div>
+                    )
+                })
+            }            
             </div>
             
         </div>

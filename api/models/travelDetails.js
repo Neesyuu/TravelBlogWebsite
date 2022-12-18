@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
 
 const travelSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     title:{
         type: String,
         required: true
+    },
+    location:{
+        type: String
     },
     tripDays: {
         type: String,
@@ -19,8 +26,9 @@ const travelSchema = mongoose.Schema({
         required : true,
         min: 1
     },
-    author: {
-        type: String
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 
