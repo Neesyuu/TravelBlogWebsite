@@ -2,7 +2,8 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 const requireAuth = (req, res, next)=>{
-    const {jwt: token} = req.cookies;
+    const token = req.header('token');
+    // const {jwt: token} = req.cookies;
     if(token){
         const isValid = jwt.verify(token, process.env.JWT_SECRET);
         if(isValid){
@@ -17,7 +18,8 @@ const requireAuth = (req, res, next)=>{
 };
 
 const checkUser = (req, res, next)=>{
-    const {jwt: token} = req.cookies;
+    const token = req.header('token');
+    // const {jwt: token} = req.cookies;
     res.locals.user = null;
     if(token){
         jwt.verify(token, process.env.JWT_SECRET, async(err, decoded)=>{
@@ -39,6 +41,7 @@ const fetchUser = (req, res, next)=>{
         try{
             const data = jwt.verify(token, process.env.JWT_SECRET);
             req.user = data.user;
+            console.log('user fetch pass')
             next();
         }catch(error){
             res.status(401).send({ error: "Please authenticate using a valid token" });
@@ -50,7 +53,8 @@ const fetchUser = (req, res, next)=>{
 
 
 const roleCheck = (req, res, next)=>{
-    const {jwt: token} = req.cookies;
+    const token = req.header('token');
+    // const {jwt: token} = req.cookies;
     if(token){
         const isValid = jwt.verify(token, process.env.JWT_SECRET);
         if(isValid){

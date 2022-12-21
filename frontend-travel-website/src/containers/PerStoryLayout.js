@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import "./css/PerStory.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPerStory } from '../store/slices/perStorySlice';
@@ -8,18 +8,66 @@ import { fetchComment } from '../store/slices/commentSlice';
 import { useState } from 'react';
 
 function PerStoryLayout() {
+    const jwt = localStorage.getItem('jwt');
     const { storyID } = useParams();   
 
     const dispatch = useDispatch();
     const { isLoading, isError, data } = useSelector(state => state.perStory);
     const { isCLoading, isCError, cData } = useSelector(state => state.comment);
 
+    const [editable, setEditable] = useState(false);
+    const [show, setShow] = useState(false);
+
+    const checkUser = async ()=>{
+        try{
+          const host = "http://localhost:5000";
+          const res = await fetch(`${host}/api/getUser`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "token": localStorage.getItem('jwt'),
+            },
+          });
+          const jsonData = await res.json();
+          return jsonData._id;
+
+        }catch(error){
+          console.log(error);
+        }      
+      }
+
+    const storyEditor = async ()=>{
+        const userKoId = await checkUser();
+        data.map((storyData, index)=>{
+            if(storyData.userId === userKoId){
+                setEditable(true);
+            }else{
+                setEditable(false);
+            }
+            return(<></>)
+        })
+        
+    }
+
+    if(jwt){
+        storyEditor();
+    }
+
+    const countDown = ()=>{
+        setTimeout(()=>{
+            setShow(true);
+            console.log('I am out')
+        }, [2000])
+    }    
+
     useEffect(()=>{
         dispatch(fetchPerStory(storyID));
         dispatch(fetchComment(storyID));
+        countDown();
         // eslint-disable-next-line
-    },[])
-
+    },[])    
+    
+    
     const [commentBox, setCommentBox] = useState({
         'fullname': '',
         'email': '',
@@ -59,9 +107,13 @@ function PerStoryLayout() {
         }
     }
 
+    
+
 
   return (
     <div className="content">
+        {/* {editable && <h2>Editable True</h2>} */}
+        {editable && show && <Link to={`/editStory/${storyID}`}>Edit Story</Link>}
         {isLoading && <h1>Loading ... </h1>}
         {!isLoading &&  isError && <h1>!! Error Occured !! </h1>}
         {!isLoading &&  !isError && data && 

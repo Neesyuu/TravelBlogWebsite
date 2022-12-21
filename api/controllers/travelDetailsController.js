@@ -5,6 +5,12 @@ const returnAllTravelDetails = async (req, res)=>{
     res.json(travelData);
 }
 
+const returnUserTravelDetails = async (req, res)=>{
+    const userId = req.user;
+    const travelData = await TravelModel.find({userId: userId});
+    res.json(travelData);
+}
+
 const returnSingleTravelDetails = async (req, res)=>{
     const {travelDetailsID} = req.params;
     const selectedTravelDetails = await TravelModel.find({_id: travelDetailsID});
@@ -17,10 +23,10 @@ const returnSingleTravelDetails = async (req, res)=>{
 
 const createTravel = async (req, res)=>{
     try{
-        const { title, tripDays, tripDescription, budget } = req.body;
-        const author = res.locals.user.name;
-        const edited = res.locals.user.name;
-        const data = { title, tripDays, tripDescription, budget, author, edited }
+        const { title, location, tripDays, tripDescription, budget } = req.body;
+        const userId = req.user;
+        console.log(userId)
+        const data = { userId, title, location, tripDays, tripDescription, budget };
         const result = await TravelModel.create(data);
         console.log('New Trip Added Success');
         res.json(result);
@@ -33,11 +39,16 @@ const createTravel = async (req, res)=>{
 const updateTravel = async (req, res)=>{
     const {travelDetailsID} = req.params;
     try{
-        const { title, tripDays, tripDescription, budget } = req.body;
-        const edited = res.locals.user.name;
-        const data = { title, tripDays, tripDescription, budget, edited }
-        const result = await TravelModel.findByIdAndUpdate(travelDetailsID, data, {new: true});
-        res.json(result);
+        const { title, location, tripDays, tripDescription, budget } = req.body;
+        const data = { title, location, tripDays, tripDescription, budget }
+        const userId = req.user;
+        const dbUserAuth = await TravelModel.findById(travelDetailsID);
+        if(userId == dbUserAuth.userId){
+            const result = await TravelModel.findByIdAndUpdate(travelDetailsID, data, {new: true});
+            res.json(result);
+        }else{
+            res.json('You are not allowed.')
+        }
     }catch(err){
         res.json(err);
     }
@@ -55,4 +66,4 @@ const deleteTravel = async (req, res)=>{
 
 
 
-module.exports = {returnAllTravelDetails, createTravel, updateTravel, deleteTravel, returnSingleTravelDetails};
+module.exports = {returnAllTravelDetails, createTravel, updateTravel, deleteTravel, returnSingleTravelDetails, returnUserTravelDetails};

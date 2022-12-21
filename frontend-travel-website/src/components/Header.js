@@ -10,31 +10,30 @@ function Header() {
 
   const dispatch = useDispatch();
   const { userID, userName } = useSelector(state => state.authentication);
-  
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if(jwt){
-      const checkUser = async ()=>{
-        try{
-          const host = "http://localhost:5000";
-          const res = await fetch(`${host}/api/getUser`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "token": localStorage.getItem('jwt'),
-            },
-          });
-          const jsonData = await res.json();
-          dispatch(placeUserID(jsonData._id));
-          dispatch(placeUserName(jsonData.name));
 
-        }catch(error){
-          console.log(error);
-        }      
-      }
-      checkUser();
+
+  const jwt = localStorage.getItem('jwt');
+  if(jwt){
+    const checkUser = async ()=>{
+      try{
+        const host = "http://localhost:5000";
+        const res = await fetch(`${host}/api/getUser`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "token": localStorage.getItem('jwt'),
+          },
+        });
+        const jsonData = await res.json();
+        dispatch(placeUserID(jsonData._id));
+        dispatch(placeUserName(jsonData.name));
+
+      }catch(error){
+        console.log(error);
+      }      
     }
-  }, [])
+    checkUser();
+  }
 
   const handleLogout = ()=>{
     localStorage.removeItem('jwt');

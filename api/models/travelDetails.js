@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const travelSchema = mongoose.Schema({
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'user'
     },
     title:{
         type: String,
@@ -19,7 +19,7 @@ const travelSchema = mongoose.Schema({
     },
     tripDescription: {
         type: String,
-        minlength : 100
+        minlength : 1
     },
     budget: {
         type: Number,

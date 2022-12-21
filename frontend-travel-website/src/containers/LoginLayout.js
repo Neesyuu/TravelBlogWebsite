@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import "./css/Auth.css";
 
 function LoginLayout() {
@@ -34,6 +35,8 @@ function LoginLayout() {
       }),
     });
     const jsonData = await res.json();
+    console.log('jsonData lol');
+    console.log(jsonData);
 
     if (jsonData.errors) {
       if (jsonData.errors.email) {
