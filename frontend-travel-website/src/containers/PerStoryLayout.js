@@ -129,11 +129,12 @@ function PerStoryLayout() {
                     <h4>Trip Days : {storyData.tripDays}</h4>
                     <p>{storyData.tripDescription}</p>
                     <div className="mainConImage">
-                        <ul>
-                            <li>Image 1</li>
-                            <li>Image 2</li>
-                            <li>Image 3</li>
-                        </ul>
+                        {storyData.images ? storyData.images.map((image, index)=>{
+                            return(
+                                <img key={index} src={`http://localhost:5000/${image.path}`}/>
+                            )
+                        }) : null }
+                        
                     </div>
                 </div>
             </div>
@@ -172,7 +173,7 @@ function PerStoryLayout() {
                 </form>
             </div>
             <div className="commentLists">
-                <h3>Comments</h3>
+                {cData[0] ? <h3>Comments</h3> : null}
                 {isCLoading && <h1>Loading ... </h1>}
                 {!isCLoading && isCError && <h1>!! Error Occured !!</h1>}
                 {!isCLoading && !isCError && cData &&

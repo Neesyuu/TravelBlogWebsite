@@ -14,7 +14,6 @@ const travelSchema = mongoose.Schema({
     },
     tripDays: {
         type: String,
-        required: true,
         min: 1
     },
     tripDescription: {
@@ -23,8 +22,10 @@ const travelSchema = mongoose.Schema({
     },
     budget: {
         type: Number,
-        required : true,
         min: 1
+    },
+    images: {
+        type: Array
     },
     date: {
         type: Date,

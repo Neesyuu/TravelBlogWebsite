@@ -22,11 +22,13 @@ const returnSingleTravelDetails = async (req, res)=>{
 }
 
 const createTravel = async (req, res)=>{
+    console.log(req.files, req.body, 16);
     try{
         const { title, location, tripDays, tripDescription, budget } = req.body;
+        const images = req.files;
         const userId = req.user;
         console.log(userId)
-        const data = { userId, title, location, tripDays, tripDescription, budget };
+        const data = { userId, title, location, tripDays, tripDescription, budget, images };
         const result = await TravelModel.create(data);
         console.log('New Trip Added Success');
         res.json(result);

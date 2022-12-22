@@ -11,7 +11,6 @@ function Header() {
   const dispatch = useDispatch();
   const { userID, userName } = useSelector(state => state.authentication);
 
-
   const jwt = localStorage.getItem('jwt');
   if(jwt){
     const checkUser = async ()=>{

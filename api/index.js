@@ -14,7 +14,7 @@ mongoose.connect(process.env.DBURI).catch((err)=>console.log(err));
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('/public'));
+app.use('/public', express.static('public'));
 app.use(cookieParser())
 app.use(checkUser);
 

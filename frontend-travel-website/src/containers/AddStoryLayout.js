@@ -14,6 +14,7 @@ function AddStoryLayout() {
     tripDescription: "",
     budget: "",
   });
+  const [image, setImage] = useState([]);
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: [e.target.value] });
@@ -23,18 +24,18 @@ function AddStoryLayout() {
     e.preventDefault();
     const host = "http://localhost:5000";
     const res = await fetch(`${host}/api/TravelDetails`, {
-    method: "POST",
-    headers: {
+      method: "POST",
+      headers: {
         "Content-Type": "application/json",
-        "token": jwt,
-    },
-    body: JSON.stringify({
+        token: jwt,
+      },
+      body: JSON.stringify({
         title: credentials.title[0],
         location: credentials.location[0],
         tripDays: credentials.tripDays[0],
         tripDescription: credentials.tripDescription[0],
         budget: credentials.budget[0],
-    }),
+      }),
     });
 
     const jsonData = await res.json();
@@ -42,17 +43,13 @@ function AddStoryLayout() {
     console.log(jsonData);
 
     if (jsonData) {
-    console.log("Trip Added Success");
-    history("/myStory");
+      console.log("Trip Added Success");
+      history("/myStory");
     } else {
-    console.log("Failed");
+      console.log("Failed");
     }
   };
 
-  const showCheck = (e)=>{
-    e.preventDefault();
-    console.log(credentials);
-  }
 
   return (
     <div className="content">
@@ -90,7 +87,8 @@ function AddStoryLayout() {
                   </div>
                   <div className="titleName2">Days : </div>
                   <div className="textBox2">
-                    <input type='number'
+                    <input
+                      type="number"
                       style={{ width: "78%" }}
                       name="tripDays"
                       onChange={onChange}
@@ -101,7 +99,8 @@ function AddStoryLayout() {
                 <div className="subDes1p2">
                   <div className="titleName1">Budget : </div>
                   <div className="textBox1">
-                    <input type='number'
+                    <input
+                      type="number"
                       style={{ width: "90%" }}
                       name="budget"
                       onChange={onChange}
@@ -113,10 +112,27 @@ function AddStoryLayout() {
                   <h3>Image</h3>
                   <div className="imageBox">
                     <ul>
-                      <li>Image 1</li>
-                      <li>
-                        <button onClick={showCheck}>Upload Image</button>
-                      </li>
+                      {Array.from(image).map((item) => {
+                        return (
+                          <li>
+                            <img
+                              style={{
+                                width: "150px",
+                                height: "150px",
+                                padding: "10px",
+                              }}
+                              src={item ? URL.createObjectURL(item) : null}
+                            />
+                          </li>
+                        );
+                      })}
+                      <input
+                        onChange={(e) => {
+                          setImage(e.target.files);
+                        }}
+                        multiple
+                        type="file"
+                      />
                     </ul>
                   </div>
                 </div>
