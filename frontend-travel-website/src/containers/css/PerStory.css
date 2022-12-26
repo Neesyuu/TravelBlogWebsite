@@ -2,9 +2,76 @@
     text-align: center;
 }
 
-.content{    
-    width: 83%;
-    margin: 0px 7%;
+.content{
+    width: 80%;
+    margin: 0px auto;
+}
+
+.per_page_content{    
+    width: 85%;
+    margin: 0px auto;
+    font-family: 'Caviar Dreams';
+    font-weight: bold;
+}
+
+.per_page_des{
+    position: absolute;
+    top: 100vh;
+    width: 85%;
+}
+
+.mainContent p{
+    font-size: 21px;
+    padding: 40px 0 10px 0;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* ok */
+
+.titleDivs{
+    text-align: center;
+    color: white;
+    font-family: 'Caviar Dreams';
+    font-weight: bold;
+    position: absolute;
+    bottom: 25px;
+    margin: 0;
+    width: 100%;
+}
+
+.titleDivs img{
+    width: 50px;
+}
+
+.titleDivs h1{
+    font-size: 54px;
+    margin: 5px;
+}
+
+.titleDivs h4{
+    margin: 5px;
+}
+
+/* ok */
+
+
+.bg_thumbnail{
+    background-color: chartreuse;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+}
+
+.bg_thumbnail img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(70%) contrast(1.1);
 }
 
 .commentDiv{
@@ -12,8 +79,8 @@
 }
 
 .commentBoxBG{
-    background-color: grey;
-    /* display: flex; */
+    background-color: #ABE7E9;
+    border-radius: 20px;
     padding: 20px;
 }
 
@@ -42,18 +109,45 @@
 }
 
 .commentBoxR .inputDiv textarea{
-    width: 99%;
-    height: 65px
+    width: 98%;
+    max-width: 98%;
+    min-width: 98%;
+    height: 110px;
+    max-height: 110px;
+    min-height: 110px;
+    padding: 10px;
+    border: 1px solid #8CDFE2;
+    background-color: #C9F9FB;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 .commentBoxBTN{
     text-align: center;
 }
 
+.commentBoxBTN button{
+    padding: 5px 30px;
+    width: 150px;
+    font-size: 30px;
+    border: 2px solid #002a2c;
+    border-radius: 5px;
+    font-family: 'Paisley Cupcake';
+    font-weight: 100;
+    background-color: #8CDFE2;
+    cursor: pointer;
+}
+
+.commentBoxBTN button:hover {
+    background-color: #002a2c;
+    color: #8CDFE2;
+}
+
 .eachComment{
-    background-color: grey;
+    background-color: #ABE7E9;
     padding: 10px 20px;
     margin: 20px 0;
+    border-radius: 10px;
 }
 
 .eachComment p{

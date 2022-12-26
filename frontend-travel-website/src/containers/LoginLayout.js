@@ -54,39 +54,42 @@ function LoginLayout() {
   };
 
   return (
-    <div className="content">
-      <div className="authDiv">
-        <form onSubmit={onSubmit}>
-          <div className="inputDiv">
-            <span>Email</span>
-            <br />
-            <input type="email" id="email" name="email" onChange={onChange} />
+    <div className="authContent" style={{ backgroundImage: `url("http://localhost:5000/public/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+        <div className="authDiv">
+          <form onSubmit={onSubmit}>
+            <div className="inputDiv">
+              <span>Email</span>
+              <br />
+              <input type="email" id="email" name="email" onChange={onChange} />
+            </div>
+
+            <div className="inputDiv">
+              <span>Password</span>
+              <br />
+              <input
+                type="password"
+                id="password"
+                name="password"
+                onChange={onChange}
+              />
+            </div>
+
+            <div className="btnDiv">
+              <button>Login</button>
+            </div>
+
+            {erroroccured.status ? (
+              <span> {erroroccured.message}</span>
+            ) : (
+              <span></span>
+            )}
+          </form>
+          <hr width="80%" />
+          <div className="optionDiv">
+            <Link to="/register">Create an account !!</Link>
           </div>
-
-          <div className="inputDiv">
-            <span>Password</span>
-            <br />
-            <input
-              type="password"
-              id="password"
-              name="password"
-              onChange={onChange}
-            />
-          </div>
-
-          <button>Login</button>
-
-          {erroroccured.status ? <h4> {erroroccured.message}</h4> : <h4></h4>}
-        </form>
-
-        <br />
-        <br />
-        <hr width="15%" />
-        <br />
-
-        <Link to="/register">Create an account !!</Link>
+        </div>
       </div>
-    </div>
   );
 }
 

@@ -9,7 +9,9 @@ const { returnComments, createComment, deleteComment } = require('../controllers
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './public/')
+        console.log('req.body');
+        console.log(req.user);
+        cb(null, './public')
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname)
@@ -17,8 +19,6 @@ let storage = multer.diskStorage({
 })
 
 let upload = multer({ storage: storage });
-
-// const upload = multer({dest: 'public/'});
 
 router.get('/', (req, res)=>{
     const user = res.locals.user;
@@ -37,10 +37,10 @@ router.get('/api/getUser', fetchUser, getUser);
 
 router.get('/api/TravelDetails', returnAllTravelDetails);
 router.get('/api/myStory', fetchUser, returnUserTravelDetails);
-router.post('/api/TravelDetails', requireAuth, fetchUser, upload.array('image', 12), createTravel);
-// router.post('/api/TravelDetails', upload.single('image'), createTravel);
+// router.post('/api/TravelDetails', requireAuth, fetchUser, thumbUp.single('thumbnail', 12), upload.array('image', 12), createTravel);
+router.post('/api/TravelDetails', requireAuth, fetchUser, upload.fields([{name: 'thumbnail', maxCount: 1},{name: 'image', maxCount: 12}]), createTravel);
 router.get('/api/TravelDetails/:travelDetailsID', returnSingleTravelDetails);
-router.patch('/api/TravelDetails/:travelDetailsID', requireAuth, fetchUser, updateTravel);
+router.patch('/api/TravelDetails/:travelDetailsID', requireAuth, fetchUser, upload.fields([{name: 'thumbnail', maxCount: 1},{name: 'image', maxCount: 12}]), updateTravel);
 router.delete('/api/TravelDetails/:travelDetailsID', requireAuth, roleCheck, deleteTravel);
 
 router.get('/api/comment/:travelId', returnComments);

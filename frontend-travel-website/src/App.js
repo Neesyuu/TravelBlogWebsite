@@ -8,7 +8,7 @@ import MyStory from './pages/MyStory';
 import PerStory from './pages/PerStory';
 import Register from './pages/Register';
 import EditStory from './pages/EditStory';
-import Test from './pages/Test'
+// import Test from './pages/Test';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
-          <Route path="/test" element={<Test/>}/>
+          {/* <Route path="/test" element={<Test/>}/> */}
           <Route path="/register" element={<Register/>}/>
           <Route path="/myStory" element={<MyStory/>}/>
           <Route path="/editStory/:storyID" element={<EditStory/>}/>

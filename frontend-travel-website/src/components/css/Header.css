@@ -2,7 +2,7 @@
     width: 90%;
     display: flex;
     text-align: center;
-    padding: 5%;
+    padding: 3% 5%;
 }
 
 .navBar .col1, .navBar .col3{
@@ -11,4 +11,16 @@
 
 .navBar .col2{
     width: 40%;
+}
+
+.titleName{
+  font-family: Optimust;
+  font-size: 50px;
+  text-decoration: none;
+  color: black;
+}
+
+.titleName:hover{
+    border: 0px;
+    filter: drop-shadow(0px 5px 5px #002a2c);
 }

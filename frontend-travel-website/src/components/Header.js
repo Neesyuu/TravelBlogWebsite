@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import './css/Header.css';
 import { placeUserID, placeUserName } from '../store/slices/authSlice'
+import IconPack from './IconPack';
 
 function Header() {
   let history = useNavigate();
@@ -43,14 +44,14 @@ function Header() {
   return (
     <div className="navBar">
         <div className="col1">
-            <Link to="/myStory">My Story</Link>
+              <IconPack image='public/myStory.png' title='My Story' link='/myStory'/>
         </div>
         <div className="col2">
-            <Link to="/">Traveler's Story</Link>
+            <Link to="/" style={{ textDecoration: 'none' }}><span className='titleName'>Traveler's Story</span></Link>
         </div>
         <div className="col3">
-          {localStorage.getItem('jwt') ? <Link to="/login">{userName}</Link> : <></>}
-          {localStorage.getItem('jwt') ? <button onClick={handleLogout}>Logout</button> : <Link to="/login">Login</Link>}
+          {/* {localStorage.getItem('jwt') ? <Link to="/login" style={{ textDecoration: 'none' }}>{userName}</Link> : <></>} */}
+          {localStorage.getItem('jwt') ? <IconPack image='public/logout.png' title='Logout' onClick={handleLogout}/> : <IconPack image='public/acc.png' title='Login' link='/login'/>}
         </div>
     </div>
   )

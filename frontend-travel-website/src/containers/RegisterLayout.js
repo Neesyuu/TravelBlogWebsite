@@ -25,14 +25,6 @@ function RegisterLayout() {
         }
     }
 
-    const checkAll = (e)=>{
-        e.preventDefault();
-        console.log(credentials);
-        console.log(credentials.name[0]);
-        console.log(credentials.email[0]);
-        console.log(credentials.password[0]);
-    }
-
     const onSubmit = async (e)=>{
         e.preventDefault();
         const host = "http://localhost:5000";
@@ -63,7 +55,7 @@ function RegisterLayout() {
     }
 
   return (
-    <div className="content">
+    <div className="authContent authOverflow" style={{ backgroundImage: `url("http://localhost:5000/public/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <div className="authDiv">
             <form onSubmit={onSubmit}>
                 <div className="inputDiv">
@@ -90,17 +82,16 @@ function RegisterLayout() {
                     <input type="password" id="confirmPassword" name="confirmPassword" onChange={checkPassword}/>
                 </div>
 
+                <div className="btnDiv">
                 <button disabled={!approve}>Register</button>
+                </div>
 
                 {erroroccured.status ? <h4> {erroroccured.message}</h4>:<h4></h4>}
             </form>
-
-            <br/>
-            <br/>
-            <hr width="15%"/>
-            <br/>
-
+            <hr width="80%"/>
+            <div className="optionDiv">
             <Link to="/login">Already have account ?</Link>
+            </div>
 
         </div>
     </div>

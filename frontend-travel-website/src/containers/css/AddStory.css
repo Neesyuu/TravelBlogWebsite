@@ -1,18 +1,38 @@
+.edit_content{
+    width: 90%;
+    margin: 0px auto 70px auto;
+}
+
 .sub_title{
     text-align: center;
+    font-size: 35px;
+    font-weight: 100;
+    letter-spacing: 2px;
 }
 
 .formBg{
-    background-color: grey;
+    background-color: #ABE7E9;
     margin: 0px 50px;
     padding: 30px 0px;
     position: relative;
+    border-radius: 20px;
+    font-size: 30px;
 }
 
 .formBg .closeBTN{
     position: absolute;
-    right: 10px;
-    top: -10px;
+    right: 22px;
+    top: -15px;
+}
+
+.formBg .closeBTN i{
+    width: 30px;
+    height: auto;
+    color: black;
+}
+
+.formBg .closeBTN i:hover{
+    color: red;
 }
 
 .form{
@@ -21,7 +41,16 @@
 
 .form textarea{
     width: 100%;
+    max-width: 100%;
+    min-width: 100%;
     height: 200px;
+    max-height: 200px;
+    min-height: 200px;
+    padding: 10px;
+    border: 1px solid #8CDFE2;
+    background-color: #C9F9FB;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 .form .subDescription{
@@ -29,12 +58,19 @@
     display: flex;
 }
 
+.subDes1 h3{
+    padding: 0;
+    margin: 0;
+    font-size: 35px;
+    font-weight: 100;
+}
+
 .form .subDescription .subDes1{
-    width: 70%;
+    width: 75%;
 }
 
 .form .subDescription .subDes2{
-    width: 30%;
+    width: 25%;
     text-align: center;
 }
 
@@ -43,23 +79,59 @@
     margin: 10px 0px;;
 }
 
-.subDes1p1 .titleName{
-    width: 10%;
+.subDes1p1 .ititleName{
+    width: 15%;
 }
 
 .subDes1p1 .textBox{
-    width: 90%;
+    width: 85%;
 }
 
-.subDes1p2 .titleName1, .subDes1p2 .titleName2{
+.textBox input, .textBox1 input, .textBox2 input{
+    padding: 10px;
+    /* width: 300px; */
+    border: 1px solid #8CDFE2;
+    background-color: #C9F9FB;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.subDes1p2 .ititleName1{
+    width: 15%;
+}
+
+.subDes1p2 .ititleName2{
+    padding-left: 5%;
     width: 10%;
 }
 
 .subDes1p2 .textBox1, .subDes1p2 .textBox2{
-    width: 40%;
+    width: 34.5%;
+}
+
+.subDes1p3{
+    padding-right: 50px;
+    padding-top: 20px;
 }
 
 .submitBtn{
     text-align: center;
-    margin: 5px;
+    margin: 50px 0 20px 0;
+}
+
+.submitBtn button{
+    padding: 5px 30px;
+    width: 150px;
+    font-size: 30px;
+    border: 2px solid #002a2c;
+    border-radius: 5px;
+    font-family: 'Paisley Cupcake';
+    font-weight: 100;
+    background-color: #8CDFE2;
+    cursor: pointer;
+}
+
+.submitBtn button:hover{
+    background-color: #002a2c;
+    color: #8CDFE2;
 }

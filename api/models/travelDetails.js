@@ -25,7 +25,7 @@ const travelSchema = mongoose.Schema({
         min: 1
     },
     images: {
-        type: Array
+        type: Object
     },
     date: {
         type: Date,

@@ -1,0 +1,39 @@
+.iconPackBox {
+    /* background-color: blue; */
+    width: fit-content;
+    height: 100%;
+    text-align: center;
+    margin: auto;
+    padding: 0px 10px;
+    /* border: 1px solid #C9F9FB; */
+}
+
+.iconPackBox:hover {
+    border: 0px;
+    filter: drop-shadow(0px 5px 5px #002a2c);
+}
+
+.imageHolder {
+    /* background-color: blueviolet; */
+    width: 40px;
+    height: 40px;
+    margin: auto;
+    padding: 10px;
+}
+
+.imageHolder img {
+    width: 100%;
+    height: 100%;
+}
+
+.titleHolder {
+    /* background-color: brown; */
+    width: fit-content;
+    margin: auto;
+}
+
+.titleHolder .title {
+    font-family: 'Paisley Cupcake';
+    font-size: 20px;
+    color: black;
+}

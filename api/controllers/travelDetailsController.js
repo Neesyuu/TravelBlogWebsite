@@ -22,7 +22,9 @@ const returnSingleTravelDetails = async (req, res)=>{
 }
 
 const createTravel = async (req, res)=>{
-    console.log(req.files, req.body, 16);
+    console.log(req, 16);
+    console.log('req.params');
+    console.log(req.body);
     try{
         const { title, location, tripDays, tripDescription, budget } = req.body;
         const images = req.files;
@@ -40,11 +42,25 @@ const createTravel = async (req, res)=>{
 
 const updateTravel = async (req, res)=>{
     const {travelDetailsID} = req.params;
+    console.log('req.params');
+    console.log(req.params);
+    console.log(req.files);
     try{
         const { title, location, tripDays, tripDescription, budget } = req.body;
-        const data = { title, location, tripDays, tripDescription, budget }
         const userId = req.user;
         const dbUserAuth = await TravelModel.findById(travelDetailsID);
+        let data = {};
+        if(req.files.thumbnail && req.files.image){
+            const images = req.files
+            data = { title, location, tripDays, tripDescription, budget, images }
+        }else if(req.files.thumbnail){
+            const images = {thumbnail: req.files.thumbnail, image: dbUserAuth.images.image}
+            data = { title, location, tripDays, tripDescription, budget, images }
+        }else if(req.files.image){
+            const images = {thumbnail: dbUserAuth.images.thumbnail, image: req.files.image}
+            data = { title, location, tripDays, tripDescription, budget, images }
+        }
+        
         if(userId == dbUserAuth.userId){
             const result = await TravelModel.findByIdAndUpdate(travelDetailsID, data, {new: true});
             res.json(result);

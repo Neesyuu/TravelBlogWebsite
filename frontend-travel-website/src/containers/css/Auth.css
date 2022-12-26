@@ -1,7 +1,86 @@
-.authDiv{
-    text-align: center;
+.authContent {
+    /* background-color: blueviolet; */
+    border-radius: 10px;
+    height: 60vh;
+    font-size: 30px;
+    margin: auto;
+    width: 86%;
+    border: 2px solid #8CDFE2;
 }
 
-.inputDiv{
-    margin: 20px;
+.authOverflow {
+    overflow-y: scroll;
+}
+
+/* width */
+.authOverflow::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.authOverflow::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+.authOverflow::-webkit-scrollbar-thumb {
+    background: #8CDFE2;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.authOverflow::-webkit-scrollbar-thumb:hover {
+    background: #002a2c;
+}
+
+.authDiv {
+    /* background-color: blue; */
+    width: fit-content;
+    margin: auto;
+    padding: 15px;
+}
+
+.inputDiv {
+    padding: 10px;
+}
+
+.inputDiv input {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #8CDFE2;
+    background-color: #C9F9FB;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.authDiv .btnDiv {
+    text-align: center;
+    padding: 20px;
+}
+
+.btnDiv button {
+    padding: 5px 30px;
+    width: 150px;
+    font-size: 30px;
+    border: 0px;
+    border-radius: 5px;
+    font-family: 'Paisley Cupcake';
+    font-weight: 100;
+    background-color: #8CDFE2;
+    cursor: pointer;
+}
+
+.btnDiv button:hover {
+    background-color: #002a2c;
+    color: #8CDFE2;
+}
+
+.authDiv .optionDiv {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.authDiv .optionDiv a {
+    color: black;
 }
