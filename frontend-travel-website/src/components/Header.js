@@ -5,9 +5,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import './css/Header.css';
 import { placeUserID, placeUserName } from '../store/slices/authSlice'
 import IconPack from './IconPack';
+import { placeMessage, placeMessageType } from '../store/slices/alertSlice';
 
 function Header() {
-  let history = useNavigate();
+  const history = useNavigate();
 
   const dispatch = useDispatch();
   const { userID, userName } = useSelector(state => state.authentication);
@@ -37,7 +38,9 @@ function Header() {
 
   const handleLogout = ()=>{
     localStorage.removeItem('jwt');
-    history('/');
+    history.push("/");
+    dispatch(placeMessage("See Ya"));
+    dispatch(placeMessageType('loading'));
   }
  
 

@@ -41,7 +41,7 @@ router.get('/api/myStory', fetchUser, returnUserTravelDetails);
 router.post('/api/TravelDetails', requireAuth, fetchUser, upload.fields([{name: 'thumbnail', maxCount: 1},{name: 'image', maxCount: 12}]), createTravel);
 router.get('/api/TravelDetails/:travelDetailsID', returnSingleTravelDetails);
 router.patch('/api/TravelDetails/:travelDetailsID', requireAuth, fetchUser, upload.fields([{name: 'thumbnail', maxCount: 1},{name: 'image', maxCount: 12}]), updateTravel);
-router.delete('/api/TravelDetails/:travelDetailsID', requireAuth, roleCheck, deleteTravel);
+router.delete('/api/TravelDetails/:travelDetailsID', requireAuth, fetchUser, deleteTravel);
 
 router.get('/api/comment/:travelId', returnComments);
 router.post('/api/comment/', createComment);

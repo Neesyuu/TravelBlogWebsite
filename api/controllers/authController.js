@@ -54,11 +54,11 @@ const loginUser = async(req, res)=>{
         res.cookie('jwt', token);
         res.json({ jwt: token });
       }else{
-        res.json({errors: 'Incorrect Password'});
+        res.json({errors: 'Incorrect Credentials'});
         // throw Error('Incorrect Password');
       }
     }else{
-      res.json({errors: 'Incorrect Email'});
+      res.json({errors: 'Email Not Found'});
       // throw Error('Incorrect Email');
     }
   }catch(err){

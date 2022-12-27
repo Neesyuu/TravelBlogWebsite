@@ -12,6 +12,7 @@ import Card from "../components/Card";
 import { Helmet } from "react-helmet";
 import AddCard from "../components/AddCard";
 import { useState } from "react";
+import { placeMessage, placeMessageType } from '../store/slices/alertSlice';
 
 function HomeLayout() {
   const dispatch = useDispatch();
@@ -25,8 +26,12 @@ function HomeLayout() {
   useEffect(() => {
     if (data.message === "Failed to fetch") {
       setErrorMessage("Failed to fetch");
+      dispatch(placeMessage("Failed to fetch"));
+      dispatch(placeMessageType('error'));
     } else if (data.message === "Error on server") {
       setErrorMessage("Error on server");
+      dispatch(placeMessage("Error on server"));
+      dispatch(placeMessageType('error'));
     }
   }, [isError]);
 
@@ -81,8 +86,8 @@ function HomeLayout() {
         <Helmet>
           <style>{"body { background: #c9cbfb; }"}</style>
         </Helmet>
-        {isLoading && <h2>Loading ... </h2>}
-        {!isLoading && isError && <h2>!! {errorMessage} !!</h2>}
+        {isLoading && <h2 className="waitMessage"><i class="fas fa-spinner fa-pulse"></i></h2>}
+        {!isLoading && isError && <h2 className="waitMessage">!! {errorMessage} !!</h2>}
         {!isLoading && !isError && data && (
           <Slider {...settings}>
             <AddCard

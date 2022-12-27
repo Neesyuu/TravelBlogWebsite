@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import "./css/Auth.css"
-
+import { placeMessage, placeMessageType } from '../store/slices/alertSlice';
+import { useDispatch } from 'react-redux';
 
 function RegisterLayout() {
     const [ credentials, setCrendentials ] = useState({name:"", email: "", password: "", confirmPassword: ""});
@@ -9,6 +10,7 @@ function RegisterLayout() {
     const [ erroroccured, setErroroccured ] = useState({status: "false", message: ""});
 
     let history = useNavigate();
+    const dispatch = useDispatch();
 
     const onChange = (e)=>{
         setCrendentials({...credentials, [e.target.name]: [e.target.value]});
@@ -17,10 +19,8 @@ function RegisterLayout() {
     const checkPassword = (e)=>{
         onChange(e);
         if(credentials.password == e.target.value){
-            console.log('Correct Password');
             setApprove(true);
         }else{
-            console.log('Incorrect Password');
             setApprove(false);
         }
     }
@@ -41,13 +41,18 @@ function RegisterLayout() {
         if(jsonData.errors){
             if(jsonData.errors.email){
                 setErroroccured({'status': true, 'message': jsonData.errors.email});
+                dispatch(placeMessage(jsonData.errors.email));
+                dispatch(placeMessageType('error'));
             }
             if(jsonData.errors.password){
                 setErroroccured({'status': true, 'message': jsonData.errors.password});
+                dispatch(placeMessage(jsonData.errors.password));
+                dispatch(placeMessageType('error'));
             }
         }
         if(jsonData.user){
-            console.log('Welcome');
+            dispatch(placeMessage("Account is created successfully"));
+            dispatch(placeMessageType('success'));
             localStorage.setItem('jwt', jsonData.jwt);
             localStorage.setItem('UserName', jsonData.userName);
             history('/');
@@ -86,7 +91,6 @@ function RegisterLayout() {
                 <button disabled={!approve}>Register</button>
                 </div>
 
-                {erroroccured.status ? <h4> {erroroccured.message}</h4>:<h4></h4>}
             </form>
             <hr width="80%"/>
             <div className="optionDiv">

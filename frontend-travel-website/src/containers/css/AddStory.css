@@ -19,21 +19,29 @@
     font-size: 30px;
 }
 
-.formBg .closeBTN{
+.formBg .deleteBTN{
     position: absolute;
     right: 22px;
     top: -15px;
 }
 
-.formBg .closeBTN i{
+.formBg .closeBTN{
+    position: absolute;
+    left: 22px;
+    top: -15px;
+}
+
+.formBg .closeBTN i, .formBg .deleteBTN i{
     width: 30px;
     height: auto;
     color: black;
 }
 
-.formBg .closeBTN i:hover{
+.formBg .closeBTN i:hover, .formBg .deleteBTN i:hover{
     color: red;
 }
+
+
 
 .form{
     margin: 0px 50px;
@@ -134,4 +142,26 @@
 .submitBtn button:hover{
     background-color: #002a2c;
     color: #8CDFE2;
+}
+
+.deleteBtn{
+    text-align: center;
+    margin: 50px 0 20px 0;
+}
+
+.deleteBtn button{
+    padding: 5px 30px;
+    width: 250px;
+    font-size: 30px;
+    border: 2px solid #C82333;
+    border-radius: 5px;
+    font-family: 'Paisley Cupcake';
+    font-weight: 100;
+    background-color: #C82333;
+    cursor: pointer;
+}
+
+.deleteBtn button:hover{
+    background-color: #CC1E1D;
+    border: 2px solid #002a2c;
 }

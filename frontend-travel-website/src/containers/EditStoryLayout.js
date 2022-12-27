@@ -9,6 +9,23 @@ import { useEffect } from "react";
 import axios from "axios";
 import ImageList from "../components/ImageList";
 import Card from "../components/Card";
+import { placeMessage, placeMessageType } from '../store/slices/alertSlice';
+
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: '#8CDFE2',
+  border: '2px solid #002a2c',
+  boxShadow: 24,
+  borderRadius: '20px',
+  p: 4,
+};
 
 function EditStoryLayout() {
   const history = useNavigate();
@@ -31,6 +48,11 @@ function EditStoryLayout() {
   const [show, setShow] = useState(false);
   const [editImage, setEditImage] = useState(false);
   const [editThumbnail, setEditThumbnail] = useState(false);
+
+  // for modal
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const countDown = () => {
     setTimeout(() => {
@@ -56,7 +78,8 @@ function EditStoryLayout() {
       };
       dataLoad();
     } catch (err) {
-      console.log("Loading ... ");
+      dispatch(placeMessage("Loading"));
+      dispatch(placeMessageType('loading'));
     }
   }, [data]);
 
@@ -102,17 +125,41 @@ function EditStoryLayout() {
       })
       .then(async (res) => {
         const jsonData = await res.data;
-        console.log("jsonData lol");
-        console.log(jsonData);
-        console.log("Trip Added Success");
+        dispatch(placeMessage("Story is updated successfully"));
+        dispatch(placeMessageType('success'));
         history("/myStory");
       })
       .catch((err) => {
         console.log("Failed", err);
+        dispatch(placeMessage("Failed to update story"));
+      dispatch(placeMessageType('error'));
       });
   };
 
-  useEffect(() => {
+  const deleteHandler = ()=>{
+    const host = "http://localhost:5000";
+    axios
+      .delete(`${host}/api/TravelDetails/${storyID}`,{
+        headers: {
+          token: jwt,
+        },
+      }).then(async (res)=>{
+        const jsonData = await res.data;
+        dispatch(placeMessage("Story is deleted successfully"));
+        dispatch(placeMessageType('loading'));
+        history("/myStory");
+      }).catch((err) => {
+        console.log("Failed", err);
+        dispatch(placeMessage("Failed to delete story"));
+        dispatch(placeMessageType('error'));
+      });
+  }
+
+   useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (!jwt) {
+      history("/login");
+    }
     dispatch(fetchPerStory(storyID));
     dispatch(fetchComment(storyID));
     // eslint-disable-next-line
@@ -120,16 +167,35 @@ function EditStoryLayout() {
 
   return (
     <div className="edit_content">
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <h1>Are you sure want to delete this story?</h1>
+          <div className="deleteBtn">
+            <button onClick={deleteHandler}>Delete This Story</button>
+          </div>
+        </Box>
+      </Modal>
+
       <h2 className="sub_title">Edit Your Story</h2>
       <div className="formBg">
         <div className="closeBTN">
           <Link to="/myStory">
-            <i class="fa-solid fa-circle-xmark"></i>
-          </Link>
+          <i class="fa-solid fa-circle-left"></i>
+          </Link>          
+        </div>
+        <div className="deleteBTN">
+          <i class="fa-solid fa-trash" onClick={handleOpen}></i>        
         </div>
         {isLoading && <h2>Loading ... </h2>}
         {!isLoading && isError && <h2>!! Error Occurred !!</h2>}
         {!(data[0] == null) && (
+          <>
           <form onSubmit={handleSubmit}>
             <div className="form">
               <span>Description</span>
@@ -274,10 +340,14 @@ function EditStoryLayout() {
                 </div>
               </div>
               <div className="submitBtn">
-                <button>Submit</button>
+                <button>Update</button>
               </div>
             </div>
           </form>
+          <div className="submitBtn">
+            <button>Delete</button>
+          </div>
+        </>
         )}
       </div>
     </div>

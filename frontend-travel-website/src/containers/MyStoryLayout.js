@@ -9,7 +9,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 import Card from "../components/Card";
 import AddCard from "../components/AddCard";
-// import './css/MyStory.css'
 
 function MyStoryLayout() {
   let history = useNavigate();

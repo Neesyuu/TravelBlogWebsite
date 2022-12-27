@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { placeMessage, placeMessageType } from '../store/slices/alertSlice';
 
 import "./css/Auth.css";
 
 function LoginLayout() {
+  const dispatch = useDispatch();
   const [credentials, setCrendentials] = useState({
     name: "",
     email: "",
@@ -39,16 +42,15 @@ function LoginLayout() {
     console.log(jsonData);
 
     if (jsonData.errors) {
-      if (jsonData.errors.email) {
-        console.log(jsonData.errors.email);
-        setErroroccured({ status: true, message: jsonData.errors.email });
-      }
-      if (jsonData.errors.password) {
-        setErroroccured({ status: true, message: jsonData.errors.password });
-      }
+      console.log('jsonData.errors.email');
+      dispatch(placeMessage(jsonData.errors));
+      dispatch(placeMessageType('error'));
+      setErroroccured({ status: true, message: jsonData.errors });      
     }
+
     if (jsonData.jwt) {
-      console.log("Welcome");
+      dispatch(placeMessage("You are logged In"));
+      dispatch(placeMessageType('success'));
       localStorage.setItem('jwt', jsonData.jwt);
       history("/");
     }
@@ -78,12 +80,6 @@ function LoginLayout() {
             <div className="btnDiv">
               <button>Login</button>
             </div>
-
-            {erroroccured.status ? (
-              <span> {erroroccured.message}</span>
-            ) : (
-              <span></span>
-            )}
           </form>
           <hr width="80%" />
           <div className="optionDiv">

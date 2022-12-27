@@ -25,7 +25,7 @@ function App() {
           <Route path="/editStory/:storyID" element={<EditStory/>}/>
           <Route path="/addStory" element={<AddStory/>}/>
           <Route path="/story/:storyID" element={<PerStory/>}/>
-          <Route path="*" element={<h1>Page Not Found.</h1>}/>
+          <Route path="*" element={<h1 className="waitMessage">Page Not Found.</h1>}/>
         </Routes>
         <Alert/>
       </BrowserRouter>

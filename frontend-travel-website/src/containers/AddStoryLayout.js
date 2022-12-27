@@ -5,9 +5,13 @@ import "./css/AddStory.css";
 import axios from "axios";
 import ImageList from "../components/ImageList";
 import Card from "../components/Card";
+import { placeMessage, placeMessageType } from "../store/slices/alertSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function AddStoryLayout() {
   const history = useNavigate();
+  const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
 
   const [credentials, setCredentials] = useState({
@@ -52,15 +56,26 @@ function AddStoryLayout() {
       })
       .then(async (res) => {
         const jsonData = await res.data;
-        console.log("jsonData lol");
-        console.log(jsonData);
-        console.log("Trip Added Success");
+        dispatch(placeMessage("Story is added successfully"));
+        dispatch(placeMessageType("success"));
         history("/myStory");
       })
       .catch((err) => {
         console.log("Failed", err);
+        dispatch(placeMessage("Failed to add story"));
+        dispatch(placeMessageType("error"));
       });
   };
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (!jwt) {
+      history("/login");
+    }
+    // eslint-disable-next-line
+  }, []);
+
+
 
   return (
     <div className="edit_content">
@@ -68,7 +83,7 @@ function AddStoryLayout() {
       <div className="formBg">
         <div className="closeBTN">
           <Link to="/myStory">
-            <i class="fa-solid fa-circle-xmark"></i>
+          <i class="fa-solid fa-circle-left"></i>
           </Link>
         </div>
         <form onSubmit={handleSubmit}>
@@ -124,49 +139,42 @@ function AddStoryLayout() {
                 <div className="subDes1p3">
                   <h3>Thumbnail Image</h3>
                   <div className="imageBox">
-                  <input
-                        onChange={(e) => {
-                          setThumbnail(e.target.files);
-                        }}
-                        type="file"
-                      />
-                      <ImageList
-                            storyData={thumbnail}
-                            db={false}
-                            editImage={true}
-                          />                      
+                    <input
+                      onChange={(e) => {
+                        setThumbnail(e.target.files);
+                      }}
+                      type="file"
+                    />
+                    <ImageList
+                      storyData={thumbnail}
+                      db={false}
+                      editImage={true}
+                    />
                   </div>
                 </div>
 
                 <div className="subDes1p3">
                   <h3>Image</h3>
                   <div className="imageBox">
-                  <input
-                        onChange={(e) => {
-                          setImage(e.target.files);
-                        }}
-                        multiple
-                        type="file"
-                      />
-                      <ImageList
-                          storyData={image}
-                          db={false}
-                          editImage={true}
-                        />
-                      
+                    <input
+                      onChange={(e) => {
+                        setImage(e.target.files);
+                      }}
+                      multiple
+                      type="file"
+                    />
+                    <ImageList storyData={image} db={false} editImage={true} />
                   </div>
                 </div>
-
-                
               </div>
               <div className="subDes2">
-              <Card
-                      editPage={true}
-                      editImage={true}
-                      thumbImg={thumbnail}
-                      location={credentials.location}
-                      title={credentials.title}
-                    />
+                <Card
+                  editPage={true}
+                  editImage={true}
+                  thumbImg={thumbnail}
+                  location={credentials.location}
+                  title={credentials.title}
+                />
               </div>
             </div>
             <div className="submitBtn">

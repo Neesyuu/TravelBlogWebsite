@@ -59,8 +59,15 @@ const updateTravel = async (req, res)=>{
         }else if(req.files.image){
             const images = {thumbnail: dbUserAuth.images.thumbnail, image: req.files.image}
             data = { title, location, tripDays, tripDescription, budget, images }
+        }else{
+            data = { title, location, tripDays, tripDescription, budget }
         }
         
+        console.log('data from db')
+        console.log(data)
+        console.log('req.body')
+        console.log(req.body)
+
         if(userId == dbUserAuth.userId){
             const result = await TravelModel.findByIdAndUpdate(travelDetailsID, data, {new: true});
             res.json(result);
@@ -74,9 +81,15 @@ const updateTravel = async (req, res)=>{
 
 const deleteTravel = async (req, res)=>{
     const {travelDetailsID} = req.params;
+    const userId = req.user;
+    const dbUserAuth = await TravelModel.findById(travelDetailsID);
     try{
-        const result = await TravelModel.findByIdAndDelete(travelDetailsID);
-        res.json(result);
+        if(userId == dbUserAuth.userId){
+            const result = await TravelModel.findByIdAndDelete(travelDetailsID);
+            res.json(result);
+        }else{
+            res.json('You are not allowed.')
+        }
     }catch(err){
         res.json(err);
     }

@@ -21,3 +21,7 @@ a{
   color: #002a2c!important;
 }
 
+.waitMessage{
+  text-align: center;
+    font-size: 8vw;
+}
