@@ -15,6 +15,9 @@ export const fetchComment = createAsyncThunk('story/fetchComment', async (storyI
             "Content-Type": "application/json",
         },
         });
+        if(!res.ok){
+            throw Error('Error on server');
+        }
         const jsonData = await res.json();
         return jsonData;
     }catch(err){

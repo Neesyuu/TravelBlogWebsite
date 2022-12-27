@@ -8,6 +8,7 @@ import MyStory from './pages/MyStory';
 import PerStory from './pages/PerStory';
 import Register from './pages/Register';
 import EditStory from './pages/EditStory';
+import Alert from './components/Alert';
 // import Test from './pages/Test';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/story/:storyID" element={<PerStory/>}/>
           <Route path="*" element={<h1>Page Not Found.</h1>}/>
         </Routes>
+        <Alert/>
       </BrowserRouter>
     </div>
   );

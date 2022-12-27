@@ -40,6 +40,7 @@ function LoginLayout() {
 
     if (jsonData.errors) {
       if (jsonData.errors.email) {
+        console.log(jsonData.errors.email);
         setErroroccured({ status: true, message: jsonData.errors.email });
       }
       if (jsonData.errors.password) {

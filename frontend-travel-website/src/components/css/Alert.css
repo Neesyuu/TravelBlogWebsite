@@ -1,0 +1,25 @@
+.alert_message{
+    text-align: center;
+    width: 99%;
+    position: absolute;
+    bottom: 0;
+    font-family: 'Paisley Cupcake';
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+
+.error{
+    background-image: linear-gradient(transparent 10%, #C9F9FB 20%, #dc3545 80%);
+}
+
+.loading{
+    background-image: linear-gradient(transparent 10%, #C9F9FB 20%, #ffc107 80%);
+}
+
+.success{
+    background-image: linear-gradient(transparent 10%, #C9F9FB 20%, #28a745 80%);
+}
+
+.noAlert{
+    display: none;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStory } from "../store/slices/storySlice";
+import { error } from "../store/slices/storySlice";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -10,14 +11,30 @@ import "slick-carousel/slick/slick-theme.css";
 import Card from "../components/Card";
 import { Helmet } from "react-helmet";
 import AddCard from "../components/AddCard";
+import { useState } from "react";
 
 function HomeLayout() {
   const dispatch = useDispatch();
   const { isLoading, isError, data } = useSelector((state) => state.story);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     dispatch(fetchStory());
   }, []);
+
+  useEffect(() => {
+    if (data.message === "Failed to fetch") {
+      setErrorMessage("Failed to fetch");
+    } else if (data.message === "Error on server") {
+      setErrorMessage("Error on server");
+    }
+  }, [isError]);
+
+  if (data.message === "Failed to fetch") {
+    dispatch(error(true));
+  } else if (data.message === "Error on server") {
+    dispatch(error(true));
+  }
 
   const settings = {
     // dots: true,
@@ -57,6 +74,7 @@ function HomeLayout() {
     ],
   };
 
+
   return (
     <>
       <div className="content">
@@ -64,15 +82,22 @@ function HomeLayout() {
           <style>{"body { background: #c9cbfb; }"}</style>
         </Helmet>
         {isLoading && <h2>Loading ... </h2>}
-        {!isLoading && isError && <h2>!! Error Occured !!</h2>}
-        <Slider {...settings}>
-        <AddCard url={"/aboutMe"} editCard={true} title='About Me' imageURL='aboutMe.jpg' />
-          {!isLoading &&
-            !isError &&
-            data.map((storyData, index) => {
-              return <Card storyData={storyData} />;
-            }).reverse()}
-        </Slider>
+        {!isLoading && isError && <h2>!! {errorMessage} !!</h2>}
+        {!isLoading && !isError && data && (
+          <Slider {...settings}>
+            <AddCard
+              url={"/aboutMe"}
+              editCard={true}
+              title="About Me"
+              imageURL="aboutMe.jpg"
+            />
+            {data
+              .map((storyData, index) => {
+                return <Card storyData={storyData} />;
+              })
+              .reverse()}
+          </Slider>
+        )}
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 
 const initialState = {
     data: [],
@@ -15,9 +16,16 @@ export const fetchStory = createAsyncThunk('story/fetchStory', async ()=>{
             "Content-Type": "application/json",
         },
         });
+
+        if(!res.ok){
+            throw Error('Error on server');
+        }
         const jsonData = await res.json();
         return jsonData;
     }catch(err){
+        console.log(err.message);
+        // const dispatch = useDispatch();
+        // dispatch(error(true));
         return err;
     }
 })
@@ -26,6 +34,9 @@ export const storySlice = createSlice({
     name: 'story',
     initialState,
     reducers: {
+        error: (state, action)=>{
+            state.isError = action.payload
+        },
     },
     extraReducers:{
         [fetchStory.pending]: (state)=>{
@@ -35,11 +46,13 @@ export const storySlice = createSlice({
             state.isLoading = false;
             state.data = action.payload;
         },
-        [fetchStory.rejected]: (state)=>{
+        [fetchStory.rejected]: (state, action)=>{
             state.isLoading = false;
             state.isError = true;
+            state.data = action.payload;
         },
     }
 })
 
+export const { error } = storySlice.actions;
 export default storySlice.reducer;
