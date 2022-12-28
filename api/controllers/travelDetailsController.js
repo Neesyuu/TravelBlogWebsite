@@ -1,4 +1,5 @@
 const TravelModel = require('../models/travelDetails');
+const User = require("../models/user");
 
 const returnAllTravelDetails = async (req, res)=>{
     const travelData = await TravelModel.find();
@@ -22,15 +23,13 @@ const returnSingleTravelDetails = async (req, res)=>{
 }
 
 const createTravel = async (req, res)=>{
-    console.log(req, 16);
-    console.log('req.params');
-    console.log(req.body);
     try{
-        const { title, location, tripDays, tripDescription, budget } = req.body;
+        const { title, location, tripDays, tripDescription, budget, date } = req.body;
         const images = req.files;
         const userId = req.user;
-        console.log(userId)
-        const data = { userId, title, location, tripDays, tripDescription, budget, images };
+        const editorData = await User.findById(userId).select("name");
+        const editorName = editorData.name;
+        const data = { userId, editorName, title, location, tripDays, tripDescription, budget, images, date };
         const result = await TravelModel.create(data);
         console.log('New Trip Added Success');
         res.json(result);
@@ -42,31 +41,23 @@ const createTravel = async (req, res)=>{
 
 const updateTravel = async (req, res)=>{
     const {travelDetailsID} = req.params;
-    console.log('req.params');
-    console.log(req.params);
-    console.log(req.files);
     try{
-        const { title, location, tripDays, tripDescription, budget } = req.body;
+        const { title, location, tripDays, tripDescription, budget, date } = req.body;
         const userId = req.user;
         const dbUserAuth = await TravelModel.findById(travelDetailsID);
         let data = {};
         if(req.files.thumbnail && req.files.image){
             const images = req.files
-            data = { title, location, tripDays, tripDescription, budget, images }
+            data = { title, location, tripDays, tripDescription, budget, date, images }
         }else if(req.files.thumbnail){
             const images = {thumbnail: req.files.thumbnail, image: dbUserAuth.images.image}
-            data = { title, location, tripDays, tripDescription, budget, images }
+            data = { title, location, tripDays, tripDescription, budget, date, images }
         }else if(req.files.image){
             const images = {thumbnail: dbUserAuth.images.thumbnail, image: req.files.image}
-            data = { title, location, tripDays, tripDescription, budget, images }
+            data = { title, location, tripDays, tripDescription, budget, date, images }
         }else{
-            data = { title, location, tripDays, tripDescription, budget }
+            data = { title, location, tripDays, tripDescription, budget, date }
         }
-        
-        console.log('data from db')
-        console.log(data)
-        console.log('req.body')
-        console.log(req.body)
 
         if(userId == dbUserAuth.userId){
             const result = await TravelModel.findByIdAndUpdate(travelDetailsID, data, {new: true});

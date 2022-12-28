@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPerStory } from '../store/slices/perStorySlice';
 import { fetchComment } from '../store/slices/commentSlice';
 import { useState } from 'react';
+import ReactHTMLParser from 'html-react-parser'
 
 import { Helmet } from "react-helmet";
 import ImageList from '../components/ImageList';
@@ -41,7 +42,7 @@ function PerStoryLayout() {
 
     const storyEditor = async ()=>{
         const userKoId = await checkUser();
-        data.map((storyData, index)=>{
+        data.map((storyData)=>{
             if(storyData.userId === userKoId){
                 setEditable(true);
             }else{
@@ -59,7 +60,6 @@ function PerStoryLayout() {
     const countDown = ()=>{
         setTimeout(()=>{
             setShow(true);
-            console.log('I am out')
         }, [2000])
     }    
 
@@ -79,6 +79,52 @@ function PerStoryLayout() {
 
     const onChange = (e)=>{
         setCommentBox({ ...commentBox , [e.target.name]: [e.target.value]});
+    }
+
+    const dateConverter = (dateFetched)=>{
+      const year = dateFetched.substr(0,4);
+      const month = parseInt(dateFetched.substr(5,2));
+      // const day = dateFetched.substr(8,2);
+      let fullDate = ''
+      if(month === 1){
+        fullDate = ' January ' + year;
+        return fullDate; 
+      }else if(month === 2){
+        fullDate = ' Feburary ' + year;
+        return fullDate;
+      }else if(month === 3){
+        fullDate = ' March ' + year;
+        return fullDate;
+      }else if(month === 4){
+        fullDate = ' April ' + year;
+        return fullDate;
+      }else if(month === 5){
+        fullDate = ' May ' + year;
+        return fullDate;
+      }else if(month === 6){
+        fullDate = ' June ' + year;
+        return fullDate;
+      }else if(month === 7){
+        fullDate = ' July ' + year;
+        return fullDate;
+      }else if(month === 8){
+        fullDate = ' August ' + year;
+        return fullDate;
+      }else if(month === 9){
+        fullDate = ' September ' + year;
+        return fullDate;
+      }else if(month === 10){
+        fullDate = ' October ' + year;
+        return fullDate;
+      }else if(month === 11){
+        fullDate = ' November ' + year;
+        return fullDate;
+      }else if(month === 12){
+        fullDate = ' December ' + year;
+        return fullDate;
+      }else{
+        return dateFetched;
+      }
     }
 
     const handleSubmit = async (e)=>{
@@ -125,8 +171,8 @@ function PerStoryLayout() {
           {".iconPackBox:hover{ filter: drop-shadow(0px 5px 5px #C9F9FB); }"}
         </style>
       </Helmet>
-      {isLoading && <h1>Loading ... </h1>}
-      {!isLoading && isError && <h1>!! Error Occured !! </h1>}
+      {isLoading && <h2 className="waitMessage"><i className="fas fa-spinner fa-pulse"></i></h2>}
+      {!isLoading && isError && <h2 className="waitMessage">!! Error Occured !! </h2>}
       {!isLoading &&
         !isError &&
         data &&
@@ -140,6 +186,7 @@ function PerStoryLayout() {
                         <img
                           key={index}
                           src={`http://localhost:5000/${image.path}`}
+                          alt='thumbnail'
                         />
                       );
                     })
@@ -148,11 +195,11 @@ function PerStoryLayout() {
 
               <div className="titleDivs">
                 {editable && show && (
-                  <Link to={`/editStory/${storyID}`}><img src={`http://localhost:5000/public/edit_icon.png`} title='Edit the content'/></Link>
+                  <Link to={`/editStory/${storyID}`}><img src={`http://localhost:5000/public/icons/edit_icon.png`} title='Edit the content' alt='edit icon'/></Link>
                 )}
-                <h4>Location</h4>
+                <h4>{storyData.location}</h4>
                 <h1>{storyData.title}</h1>
-                <h4>January 06, 1998</h4>
+                <h4>{dateConverter(storyData.date)}</h4>
               </div>
             </>
           );
@@ -167,8 +214,9 @@ function PerStoryLayout() {
             data.map((storyData, index) => {
               return (
                 <div key={index}>
-                  <div className="mainContent">                    
-                    <p>{storyData.tripDescription}</p>
+                  <div className="mainContent">    
+                    <h4>Story by : {storyData.editorName}</h4>                
+                    <div className='descriptionContent'>{ReactHTMLParser(storyData.tripDescription)}</div>
                     <h4>Trip Budget : {storyData.budget}</h4>
                     <h4>Trip Days : {storyData.tripDays}</h4>
 

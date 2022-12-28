@@ -3,7 +3,7 @@ import "./css/Card.css";
 import { Link } from "react-router-dom";
 
 function AddCard(props) {
-  const { url, editCard, title, imageURL } = props;
+  const { url, editCard, imageURL } = props;
   if(editCard){
     return (
       <div className="card">
@@ -11,6 +11,7 @@ function AddCard(props) {
           <div className="card-top">
             <img
               src={`http://localhost:5000/public/${imageURL}`}
+              alt='thumbnail'
             />
           </div>
         </Link>
@@ -34,7 +35,8 @@ function AddCard(props) {
         <div className="card-top">
           <img
             className="addImg"
-            src={`http://localhost:5000/public/addNew.png`}
+            src={`http://localhost:5000/public/icons/addNew.png`}
+            alt='thumbnail'
           />
         </div>
       </Link>

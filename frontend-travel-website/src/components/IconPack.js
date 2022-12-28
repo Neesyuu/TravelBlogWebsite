@@ -8,7 +8,7 @@ function IconPack(props) {
     <div className="iconPackBox">
       <Link to={link} style={{ textDecoration: "none" }} onClick={onClick}>
       <div className="imageHolder">        
-          <img src={`http://localhost:5000/${image}`} />
+          <img src={`http://localhost:5000/${image}`} alt='Display Icon'/>
       </div>
       <div className="titleHolder">
           <span className="title">{title}</span>

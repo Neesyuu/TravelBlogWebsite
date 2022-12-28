@@ -1,35 +1,43 @@
-.titleDiv{
+.titleDiv {
     text-align: center;
 }
 
-.content{
+.content {
     width: 80%;
     margin: 0px auto;
 }
 
-.per_page_content{    
+.per_page_content {
     width: 85%;
     margin: 0px auto;
     font-family: 'Caviar Dreams';
     font-weight: bold;
 }
 
-.per_page_des{
+.per_page_des {
     position: absolute;
     top: 100vh;
     width: 85%;
 }
 
-.mainContent p{
-    font-size: 21px;
-    padding: 40px 0 10px 0;
-    line-height: 1.5;
+.mainContent .descriptionContent {
+    font-size: 20px;
+    padding: 10px 0 10px 0;
+    /* line-height: 1.5; */
     text-align: justify;
+}
+
+.mainContent .descriptionContent p, .mainContent .descriptionContent span, .mainContent .descriptionContent h1, .mainContent .descriptionContent h2, .mainContent .descriptionContent h3, .mainContent .descriptionContent h4, .mainContent .descriptionContent h5, .mainContent .descriptionContent img, .mainContent .descriptionContent ol {
+    background-color: #C9F9FB !important;
+}
+
+.mainContent .descriptionContent ul, .mainContent .descriptionContent li{
+    background-color: #C9F9FB !important;
 }
 
 /* ok */
 
-.titleDivs{
+.titleDivs {
     text-align: center;
     color: white;
     font-family: 'Caviar Dreams';
@@ -40,23 +48,23 @@
     width: 100%;
 }
 
-.titleDivs img{
+.titleDivs img {
     width: 50px;
 }
 
-.titleDivs h1{
+.titleDivs h1 {
     font-size: 54px;
     margin: 5px;
 }
 
-.titleDivs h4{
+.titleDivs h4 {
     margin: 5px;
 }
 
 /* ok */
 
 
-.bg_thumbnail{
+.bg_thumbnail {
     background-color: chartreuse;
     position: absolute;
     top: 0;
@@ -67,48 +75,48 @@
     text-align: center;
 }
 
-.bg_thumbnail img{
+.bg_thumbnail img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(70%) contrast(1.1);
+    filter: brightness(50%) contrast(1.1);
 }
 
-.commentDiv{
+.commentDiv {
     margin: 50px 0;
 }
 
-.commentBoxBG{
+.commentBoxBG {
     background-color: #ABE7E9;
     border-radius: 20px;
     padding: 20px;
 }
 
-.commentBoxContent{
+.commentBoxContent {
     display: flex;
 }
 
-.commentBoxL{
+.commentBoxL {
     width: 30%;
 }
 
-.commentBoxR{
+.commentBoxR {
     width: 70%;
 }
 
-.commentBoxL .inputDiv{
+.commentBoxL .inputDiv {
     margin: 10px 0;
 }
 
-.commentBoxL .inputDiv input{
+.commentBoxL .inputDiv input {
     width: 90%;
 }
 
-.commentBoxR .inputDiv{
+.commentBoxR .inputDiv {
     margin: 10px 0;
 }
 
-.commentBoxR .inputDiv textarea{
+.commentBoxR .inputDiv textarea {
     width: 98%;
     max-width: 98%;
     min-width: 98%;
@@ -122,11 +130,11 @@
     font-size: 16px;
 }
 
-.commentBoxBTN{
+.commentBoxBTN {
     text-align: center;
 }
 
-.commentBoxBTN button{
+.commentBoxBTN button {
     padding: 5px 30px;
     width: 150px;
     font-size: 30px;
@@ -143,14 +151,13 @@
     color: #8CDFE2;
 }
 
-.eachComment{
+.eachComment {
     background-color: #ABE7E9;
     padding: 10px 20px;
     margin: 20px 0;
     border-radius: 10px;
 }
 
-.eachComment p{
+.eachComment p {
     font-size: 20px;
 }
-

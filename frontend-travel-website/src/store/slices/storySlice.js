@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
 
 const initialState = {
     data: [],
@@ -24,8 +23,6 @@ export const fetchStory = createAsyncThunk('story/fetchStory', async ()=>{
         return jsonData;
     }catch(err){
         console.log(err.message);
-        // const dispatch = useDispatch();
-        // dispatch(error(true));
         return err;
     }
 })

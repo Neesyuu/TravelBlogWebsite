@@ -19,6 +19,12 @@
     font-size: 30px;
 }
 
+.form_texteditor{
+    font-size: 22px;
+    font-family: 'Source Sans Pro';
+    /* line-height: 5px; */
+} 
+
 .formBg .deleteBTN{
     position: absolute;
     right: 22px;

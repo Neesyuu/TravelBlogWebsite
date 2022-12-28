@@ -45,6 +45,6 @@ router.delete('/api/TravelDetails/:travelDetailsID', requireAuth, fetchUser, del
 
 router.get('/api/comment/:travelId', returnComments);
 router.post('/api/comment/', createComment);
-router.delete('/api/comment/:commentId', requireAuth, roleCheck, deleteComment);
+router.delete('/api/comment/:commentId', requireAuth, fetchUser, deleteComment);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPerStory } from "../store/slices/perStorySlice";
@@ -9,21 +9,23 @@ import { useEffect } from "react";
 import axios from "axios";
 import ImageList from "../components/ImageList";
 import Card from "../components/Card";
-import { placeMessage, placeMessageType } from '../store/slices/alertSlice';
+import { placeMessage, placeMessageType } from "../store/slices/alertSlice";
 
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+
+import JoditEditor from "jodit-react";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: '#8CDFE2',
-  border: '2px solid #002a2c',
+  bgcolor: "#8CDFE2",
+  border: "2px solid #002a2c",
   boxShadow: 24,
-  borderRadius: '20px',
+  borderRadius: "20px",
   p: 4,
 };
 
@@ -32,15 +34,20 @@ function EditStoryLayout() {
   const { storyID } = useParams();
   const jwt = localStorage.getItem("jwt");
 
+  // rich text editor
+  const editor = useRef(null);
+  // editor
+
   const dispatch = useDispatch();
   const { isLoading, isError, data } = useSelector((state) => state.perStory);
-  const { isCLoading, isCError, cData } = useSelector((state) => state.comment);
+  // const { isCLoading, isCError, cData } = useSelector((state) => state.comment);
   const [credentials, setCredentials] = useState({
     title: "hello",
     location: "",
     tripDays: "",
     tripDescription: "",
     budget: "",
+    date: "",
   });
   const [image, setImage] = useState([]);
   const [thumbnail, setThumbnail] = useState([]);
@@ -57,7 +64,6 @@ function EditStoryLayout() {
   const countDown = () => {
     setTimeout(() => {
       setShow(true);
-      console.log("I am out");
     }, [2000]);
   };
 
@@ -72,6 +78,7 @@ function EditStoryLayout() {
           tripDays: data[0].tripDays,
           tripDescription: data[0].tripDescription,
           budget: data[0].budget,
+          date: data[0].date,
         });
         setImage(data[0].images.image);
         setThumbnail(data[0].images.thumbnail);
@@ -79,8 +86,9 @@ function EditStoryLayout() {
       dataLoad();
     } catch (err) {
       dispatch(placeMessage("Loading"));
-      dispatch(placeMessageType('loading'));
-    }
+      dispatch(placeMessageType("loading"));
+    }    
+      // eslint-disable-next-line
   }, [data]);
 
   const onChange = (e) => {
@@ -89,8 +97,6 @@ function EditStoryLayout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("credentials");
-    console.log(credentials.title);
 
     const formData = new FormData();
 
@@ -99,19 +105,16 @@ function EditStoryLayout() {
     formData.append("tripDays", credentials.tripDays);
     formData.append("tripDescription", credentials.tripDescription);
     formData.append("budget", credentials.budget);
+    formData.append("date", credentials.date);
 
     if (editThumbnail) {
       Array.from(thumbnail).forEach((item) => {
-        console.log("edit thumb");
-        console.log(item);
         formData.append("thumbnail", item);
       });
     }
 
     if (editImage) {
       Array.from(image).forEach((item) => {
-        console.log("edit image");
-        console.log(item);
         formData.append("image", item);
       });
     }
@@ -124,38 +127,40 @@ function EditStoryLayout() {
         },
       })
       .then(async (res) => {
-        const jsonData = await res.data;
+        // const jsonData = await res.data;
         dispatch(placeMessage("Story is updated successfully"));
-        dispatch(placeMessageType('success'));
+        dispatch(placeMessageType("success"));
         history("/myStory");
       })
       .catch((err) => {
         console.log("Failed", err);
         dispatch(placeMessage("Failed to update story"));
-      dispatch(placeMessageType('error'));
+        dispatch(placeMessageType("error"));
       });
   };
 
-  const deleteHandler = ()=>{
+  const deleteHandler = () => {
     const host = "http://localhost:5000";
     axios
-      .delete(`${host}/api/TravelDetails/${storyID}`,{
+      .delete(`${host}/api/TravelDetails/${storyID}`, {
         headers: {
           token: jwt,
         },
-      }).then(async (res)=>{
-        const jsonData = await res.data;
+      })
+      .then(async (res) => {
+        // const jsonData = await res.data;
         dispatch(placeMessage("Story is deleted successfully"));
-        dispatch(placeMessageType('loading'));
+        dispatch(placeMessageType("loading"));
         history("/myStory");
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log("Failed", err);
         dispatch(placeMessage("Failed to delete story"));
-        dispatch(placeMessageType('error'));
+        dispatch(placeMessageType("error"));
       });
-  }
+  };
 
-   useEffect(() => {
+  useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (!jwt) {
       history("/login");
@@ -167,7 +172,6 @@ function EditStoryLayout() {
 
   return (
     <div className="edit_content">
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -186,78 +190,103 @@ function EditStoryLayout() {
       <div className="formBg">
         <div className="closeBTN">
           <Link to="/myStory">
-          <i class="fa-solid fa-circle-left"></i>
-          </Link>          
+            <i className="fa-solid fa-circle-left"></i>
+          </Link>
         </div>
         <div className="deleteBTN">
-          <i class="fa-solid fa-trash" onClick={handleOpen}></i>        
+          <i className="fa-solid fa-trash" onClick={handleOpen}></i>
         </div>
         {isLoading && <h2>Loading ... </h2>}
         {!isLoading && isError && <h2>!! Error Occurred !!</h2>}
         {!(data[0] == null) && (
           <>
-          <form onSubmit={handleSubmit}>
-            <div className="form">
-              <span>Description</span>
-              <br />
-              <textarea
+            <form onSubmit={handleSubmit}>
+              <div className="form">
+                <span>Description</span>
+                <br />
+
+                <div className="form_texteditor">
+                  {/* <textarea
                 name="tripDescription"
                 value={credentials.tripDescription}
                 onChange={onChange}
-              ></textarea>
-              <div className="subDescription">
-                <div className="subDes1">
-                  <div className="subDes1p1">
-                    <div className="ititleName">Title : </div>
-                    <div className="textBox">
-                      <input
-                        style={{ width: "90%" }}
-                        name="title"
-                        value={credentials.title}
-                        onChange={onChange}
-                      />
-                    </div>
-                  </div>
+              ></textarea> */}
+                  <JoditEditor
+                    ref={editor}
+                    value={credentials.tripDescription}
+                    onChange={(newContent) => {
+                      setCredentials({
+                        ...credentials,
+                        tripDescription: newContent,
+                      });
+                    }}
+                  />
+                </div>
+                <br />
 
-                  <div className="subDes1p2">
-                    <div className="ititleName1">Location : </div>
-                    <div className="textBox1">
-                      <input
-                        style={{ width: "90%" }}
-                        name="location"
-                        value={credentials.location}
-                        onChange={onChange}
-                      />
+                <div className="subDescription">
+                  <div className="subDes1">
+                    <div className="subDes1p1">
+                      <div className="ititleName">Title : </div>
+                      <div className="textBox">
+                        <input
+                          style={{ width: "90%" }}
+                          name="title"
+                          value={credentials.title}
+                          onChange={onChange}
+                        />
+                      </div>
                     </div>
-                    <div className="ititleName2">Days : </div>
-                    <div className="textBox2">
-                      <input
-                        type="number"
-                        style={{ width: "78%" }}
-                        name="tripDays"
-                        value={credentials.tripDays}
-                        onChange={onChange}
-                      />
-                    </div>
-                  </div>
 
-                  <div className="subDes1p2">
-                    <div className="ititleName1">Budget : </div>
-                    <div className="textBox1">
-                      <input
-                        type="number"
-                        style={{ width: "90%" }}
-                        name="budget"
-                        value={credentials.budget}
-                        onChange={onChange}
-                      />
+                    <div className="subDes1p2">
+                      <div className="ititleName1">Location : </div>
+                      <div className="textBox1">
+                        <input
+                          style={{ width: "90%" }}
+                          name="location"
+                          value={credentials.location}
+                          onChange={onChange}
+                        />
+                      </div>
+                      <div className="ititleName2">Days : </div>
+                      <div className="textBox2">
+                        <input
+                          type="string"
+                          style={{ width: "78%" }}
+                          name="tripDays"
+                          value={credentials.tripDays}
+                          onChange={onChange}
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="subDes1p3">
-                    <h3>Thumbnail Image</h3>
-                    <div className="imageBox">
-                    <input
+                    <div className="subDes1p2">
+                      <div className="ititleName1">Budget : </div>
+                      <div className="textBox1">
+                        <input
+                          type="string"
+                          style={{ width: "90%" }}
+                          name="budget"
+                          value={credentials.budget}
+                          onChange={onChange}
+                        />
+                      </div>
+                      <div className="ititleName2">Date : </div>
+                      <div className="textBox2">
+                        <input
+                          type="date"
+                          style={{ width: "78%" }}
+                          name="date"
+                          value={credentials.date}
+                          onChange={onChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="subDes1p3">
+                      <h3>Thumbnail Image</h3>
+                      <div className="imageBox">
+                        <input
                           onChange={(e) => {
                             setThumbnail(e.target.files);
                             setEditThumbnail(true);
@@ -278,76 +307,66 @@ function EditStoryLayout() {
                             editImage={true}
                           />
                         )}
+                      </div>
+                    </div>
 
-                        
+                    <div className="subDes1p3">
+                      <h3>Image</h3>
+                      <div className="imageBox">
+                        <input
+                          onChange={(e) => {
+                            setImage(e.target.files);
+                            setEditImage(true);
+                          }}
+                          multiple
+                          type="file"
+                        />
+
+                        {image && show && !editImage && (
+                          <ImageList
+                            storyData={image}
+                            db={false}
+                            editImage={false}
+                          />
+                        )}
+
+                        {image && show && editImage && (
+                          <ImageList
+                            storyData={image}
+                            db={false}
+                            editImage={true}
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
-
-                  <div className="subDes1p3">
-                    <h3>Image</h3>
-                    <div className="imageBox">
-                      
-                    <input
-                        onChange={(e) => {
-                          setImage(e.target.files);
-                          setEditImage(true);
-                        }}
-                        multiple
-                        type="file"
+                  <div className="subDes2">
+                    {thumbnail && show && !editThumbnail && (
+                      <Card
+                        editPage={true}
+                        editImage={false}
+                        thumbImg={thumbnail}
+                        location={credentials.location}
+                        title={credentials.title}
                       />
-
-                      {image && show && !editImage && (
-                        <ImageList
-                          storyData={image}
-                          db={false}
-                          editImage={false}
-                        />
-                      )}
-
-                      {image && show && editImage && (
-                        <ImageList
-                          storyData={image}
-                          db={false}
-                          editImage={true}
-                        />
-                      )}
-
-                      
-                    </div>
+                    )}
+                    {thumbnail && show && editThumbnail && (
+                      <Card
+                        editPage={true}
+                        editImage={true}
+                        thumbImg={thumbnail}
+                        location={credentials.location}
+                        title={credentials.title}
+                      />
+                    )}
                   </div>
-
-                  
                 </div>
-                <div className="subDes2">
-                  {thumbnail && show && !editThumbnail && (
-                    <Card
-                      editPage={true}
-                      editImage={false}
-                      thumbImg={thumbnail}
-                      location={credentials.location}
-                      title={credentials.title}
-                    />
-                  )}
-                  {thumbnail && show && editThumbnail && (
-                    <Card
-                      editPage={true}
-                      editImage={true}
-                      thumbImg={thumbnail}
-                      location={credentials.location}
-                      title={credentials.title}
-                    />
-                  )}
+                <div className="submitBtn">
+                  <button>Update</button>
                 </div>
               </div>
-              <div className="submitBtn">
-                <button>Update</button>
-              </div>
-            </div>
-          </form>
-          <div className="submitBtn">
-            <button>Delete</button>
-          </div>
-        </>
+            </form>
+          </>
         )}
       </div>
     </div>

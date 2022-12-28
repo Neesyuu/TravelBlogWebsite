@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 function RegisterLayout() {
     const [ credentials, setCrendentials ] = useState({name:"", email: "", password: "", confirmPassword: ""});
     const [ approve, setApprove ] = useState(false);
-    const [ erroroccured, setErroroccured ] = useState({status: "false", message: ""});
+    // const [ erroroccured, setErroroccured ] = useState({status: "false", message: ""});
 
     let history = useNavigate();
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function RegisterLayout() {
 
     const checkPassword = (e)=>{
         onChange(e);
-        if(credentials.password == e.target.value){
+        if(credentials.password[0] === e.target.value){
             setApprove(true);
         }else{
             setApprove(false);
@@ -36,16 +36,15 @@ function RegisterLayout() {
             body: JSON.stringify({name: credentials.name[0] ,email: credentials.email[0], password: credentials.password[0], role: 'editor'})
         })
         const jsonData = await res.json();
-        console.log(jsonData)
 
         if(jsonData.errors){
             if(jsonData.errors.email){
-                setErroroccured({'status': true, 'message': jsonData.errors.email});
+                // setErroroccured({'status': true, 'message': jsonData.errors.email});
                 dispatch(placeMessage(jsonData.errors.email));
                 dispatch(placeMessageType('error'));
             }
             if(jsonData.errors.password){
-                setErroroccured({'status': true, 'message': jsonData.errors.password});
+                // setErroroccured({'status': true, 'message': jsonData.errors.password});
                 dispatch(placeMessage(jsonData.errors.password));
                 dispatch(placeMessageType('error'));
             }
@@ -59,8 +58,10 @@ function RegisterLayout() {
         }
     }
 
+    
+
   return (
-    <div className="authContent authOverflow" style={{ backgroundImage: `url("http://localhost:5000/public/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+    <div className="authContent authOverflow" style={{ backgroundImage: `url("http://localhost:5000/public/icons/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <div className="authDiv">
             <form onSubmit={onSubmit}>
                 <div className="inputDiv">

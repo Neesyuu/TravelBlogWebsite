@@ -5,6 +5,9 @@ const travelSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
+    editorName:{
+        type: String,
+    },
     title:{
         type: String,
         required: true
@@ -13,22 +16,20 @@ const travelSchema = mongoose.Schema({
         type: String
     },
     tripDays: {
-        type: String,
-        min: 1
+        type: String
     },
     tripDescription: {
         type: String,
         minlength : 1
     },
     budget: {
-        type: Number,
-        min: 1
+        type: String
     },
     images: {
         type: Object
     },
     date: {
-        type: Date,
+        type: String,
         default: Date.now
     }
 });

@@ -21,6 +21,7 @@ function HomeLayout() {
 
   useEffect(() => {
     dispatch(fetchStory());
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ function HomeLayout() {
       dispatch(placeMessage("Error on server"));
       dispatch(placeMessageType('error'));
     }
+    // eslint-disable-next-line
   }, [isError]);
 
   if (data.message === "Failed to fetch") {
@@ -86,7 +88,7 @@ function HomeLayout() {
         <Helmet>
           <style>{"body { background: #c9cbfb; }"}</style>
         </Helmet>
-        {isLoading && <h2 className="waitMessage"><i class="fas fa-spinner fa-pulse"></i></h2>}
+        {isLoading && <h2 className="waitMessage"><i className="fas fa-spinner fa-pulse"></i></h2>}
         {!isLoading && isError && <h2 className="waitMessage">!! {errorMessage} !!</h2>}
         {!isLoading && !isError && data && (
           <Slider {...settings}>
@@ -94,11 +96,11 @@ function HomeLayout() {
               url={"/aboutMe"}
               editCard={true}
               title="About Me"
-              imageURL="aboutMe.jpg"
+              imageURL="icons/aboutMe.jpg"
             />
             {data
               .map((storyData, index) => {
-                return <Card storyData={storyData} />;
+                return <Card storyData={storyData}/>;
               })
               .reverse()}
           </Slider>

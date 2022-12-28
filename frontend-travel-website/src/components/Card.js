@@ -15,6 +15,7 @@ function Card(props) {
                 <img
                   key={index}
                   src={item ? URL.createObjectURL(item) : null}
+                  alt='thumbnail'
                 />
               );
             })}
@@ -31,7 +32,7 @@ function Card(props) {
           <div className="card-top">
             {Array.from(thumbImg).map((item, index) => {
               return (
-                <img key={index} src={`http://localhost:5000/${item.path}`} />
+                <img key={index} src={`http://localhost:5000/${item.path}`} alt='thumbnail' />
               );
             })}
           </div>
@@ -52,6 +53,7 @@ function Card(props) {
                   <img
                     key={index}
                     src={`http://localhost:5000/${image.path}`}
+                    alt='thumbnail'
                   />
                 );
               })

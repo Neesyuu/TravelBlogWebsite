@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./css/AddStory.css";
 import axios from "axios";
@@ -9,10 +9,16 @@ import { placeMessage, placeMessageType } from "../store/slices/alertSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
+import JoditEditor from 'jodit-react';
+
 function AddStoryLayout() {
   const history = useNavigate();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
+
+  // rich text editor
+  const editor = useRef(null);
+  // editor
 
   const [credentials, setCredentials] = useState({
     title: "",
@@ -20,6 +26,7 @@ function AddStoryLayout() {
     tripDays: "",
     tripDescription: "",
     budget: "",
+    date: "",
   });
   const [image, setImage] = useState([]);
   const [thumbnail, setThumbnail] = useState([]);
@@ -35,16 +42,15 @@ function AddStoryLayout() {
     formData.append("title", credentials.title[0]);
     formData.append("location", credentials.location[0]);
     formData.append("tripDays", credentials.tripDays[0]);
-    formData.append("tripDescription", credentials.tripDescription[0]);
+    formData.append("tripDescription", credentials.tripDescription);
     formData.append("budget", credentials.budget[0]);
+    formData.append("date", credentials.date[0]);
 
     Array.from(thumbnail).forEach((item) => {
-      console.log(item);
       formData.append("thumbnail", item);
     });
 
     Array.from(image).forEach((item) => {
-      console.log(item);
       formData.append("image", item);
     });
 
@@ -55,7 +61,7 @@ function AddStoryLayout() {
         },
       })
       .then(async (res) => {
-        const jsonData = await res.data;
+        // const jsonData = await res.data;
         dispatch(placeMessage("Story is added successfully"));
         dispatch(placeMessageType("success"));
         history("/myStory");
@@ -74,23 +80,35 @@ function AddStoryLayout() {
     }
     // eslint-disable-next-line
   }, []);
-
-
-
+  
   return (
     <div className="edit_content">
       <h2 className="sub_title">Add Your Story</h2>
       <div className="formBg">
         <div className="closeBTN">
           <Link to="/myStory">
-          <i class="fa-solid fa-circle-left"></i>
+          <i className="fa-solid fa-circle-left"></i>
           </Link>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form">
             <span>Description</span>
             <br />
-            <textarea name="tripDescription" onChange={onChange}></textarea>
+            <div className="form_texteditor">
+            {/* <textarea id="editor" name="tripDescription" onChange={onChange}></textarea> */}
+            <JoditEditor
+                    ref={editor}
+                    value={credentials.tripDescription}
+                    onChange={(newContent) => {
+                      setCredentials({
+                        ...credentials,
+                        tripDescription: newContent,
+                      });
+                    }}
+                  />
+            </div>
+            <br />            
+
             <div className="subDescription">
               <div className="subDes1">
                 <div className="subDes1p1">
@@ -116,7 +134,7 @@ function AddStoryLayout() {
                   <div className="ititleName2">Days : </div>
                   <div className="textBox2">
                     <input
-                      type="number"
+                      type="string"
                       style={{ width: "78%" }}
                       name="tripDays"
                       onChange={onChange}
@@ -128,10 +146,21 @@ function AddStoryLayout() {
                   <div className="ititleName1">Budget : </div>
                   <div className="textBox1">
                     <input
-                      type="number"
+                      type="string"
                       style={{ width: "90%" }}
                       name="budget"
                       onChange={onChange}
+                    />
+                  </div>
+                  <div className="ititleName2">Date : </div>
+                  <div className="textBox2">
+                    <input
+                      type="date"
+                      style={{ width: "78%" }}
+                      name="date"
+                      onChange={onChange}
+                      placeholder='YYYY-MM-DD'
+                      maxLength={10}
                     />
                   </div>
                 </div>

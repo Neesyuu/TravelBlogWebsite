@@ -29,7 +29,6 @@ const handleErrors = (err) => {
 
 const createUser = async (req, res) => {
   try {
-    console.log(req.body);
     const user = await User.create(req.body);
     const token = jwt.sign({ user: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
@@ -80,7 +79,7 @@ const logoutUser = (req, res)=>{
 
 const getUser = async(req, res)=>{
   try{
-    userID = req.user;
+    const userID = req.user;
     const user = await User.findById(userID).select("-password");
     res.json(user);
   }catch(err){

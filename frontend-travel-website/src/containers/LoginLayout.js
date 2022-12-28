@@ -13,10 +13,11 @@ function LoginLayout() {
     password: "",
     confirmPassword: "",
   });
-  const [erroroccured, setErroroccured] = useState({
-    status: "false",
-    message: "",
-  });
+  
+  // const [erroroccured, setErroroccured] = useState({
+  //   status: "false",
+  //   message: "",
+  // });
 
   let history = useNavigate();
 
@@ -38,14 +39,11 @@ function LoginLayout() {
       }),
     });
     const jsonData = await res.json();
-    console.log('jsonData lol');
-    console.log(jsonData);
 
     if (jsonData.errors) {
-      console.log('jsonData.errors.email');
       dispatch(placeMessage(jsonData.errors));
       dispatch(placeMessageType('error'));
-      setErroroccured({ status: true, message: jsonData.errors });      
+      // setErroroccured({ status: true, message: jsonData.errors });      
     }
 
     if (jsonData.jwt) {
@@ -57,7 +55,7 @@ function LoginLayout() {
   };
 
   return (
-    <div className="authContent" style={{ backgroundImage: `url("http://localhost:5000/public/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+    <div className="authContent" style={{ backgroundImage: `url("http://localhost:5000/public/icons/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <div className="authDiv">
           <form onSubmit={onSubmit}>
             <div className="inputDiv">

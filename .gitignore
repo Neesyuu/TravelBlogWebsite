@@ -1,0 +1,6 @@
+.gitignore
+api/node_modules
+api/public
+
+!.gitignore
+api/public/icons
