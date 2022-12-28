@@ -1,6 +1,5 @@
 .gitignore
 api/node_modules
-api/public
+api/public/*
 
-!.gitignore
-api/public/icons
+!api/public/icons
