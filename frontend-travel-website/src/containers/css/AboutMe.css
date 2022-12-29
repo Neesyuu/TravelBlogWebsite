@@ -1,0 +1,32 @@
+.aboutMe_content {
+    width: 80%;
+    margin: 0px auto;
+    font-family: 'Caviar Dreams';
+    /* letter-spacing: 3px; */
+    font-size: 10px;
+}
+
+.aboutMe_content .btnDiv button {
+    padding: 5px 30px;
+    width: 250px;
+    font-size: 25px;
+    border: 0px;
+    border-radius: 5px;
+    font-family: 'Paisley Cupcake';
+    font-weight: 100;
+    background-color: #8CDFE2;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.aboutMe_content .btnDiv button:hover {
+    background-color: #002a2c;
+    color: #8CDFE2;
+}
+
+/* .css-2kge1y{
+    background-image: url("http://localhost:5000/public/icons/aboutMe.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(40%) contrast(1.1);
+} */

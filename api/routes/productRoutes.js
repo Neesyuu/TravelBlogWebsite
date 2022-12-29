@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 let path = require('path');
 const { requireAuth, roleCheck, fetchUser, checkUser } = require('../middleware/authMiddleware');
-const {createUser, loginUser, logoutUser, getUser} = require('../controllers/authController');
+const { createUser, loginUser, logoutUser, getUser, changeUsername, changePassword } = require('../controllers/authController');
 const {returnAllTravelDetails, returnSingleTravelDetails, createTravel, updateTravel, deleteTravel, returnUserTravelDetails} = require('../controllers/travelDetailsController');
 const { returnComments, createComment, deleteComment } = require('../controllers/commentController');
 
@@ -34,6 +34,8 @@ router.post('/api/signup', createUser);
 router.post('/api/login', loginUser);
 router.get('/api/logout', logoutUser);
 router.get('/api/getUser', fetchUser, getUser);
+router.patch('/api/cusername', fetchUser, changeUsername);
+router.patch('/api/cpass', fetchUser, changePassword);
 
 router.get('/api/TravelDetails', returnAllTravelDetails);
 router.get('/api/myStory', fetchUser, returnUserTravelDetails);

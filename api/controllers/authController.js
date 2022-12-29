@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const validator = require('validator');
 
 const handleErrors = (err) => {
   const errors = {
@@ -87,7 +88,44 @@ const getUser = async(req, res)=>{
   }
 }
 
+const changeUsername = async(req, res)=>{
+  try{
+    console.log('i am here')
+    console.log(req.body);
+    const userID = req.user;
+    console.log('userID');
+    console.log(userID);
+    const user = await User.findByIdAndUpdate(userID, req.body, {new: false});
+    res.json(user);
+  }catch(err){
+    res.json({errors: err});
+  }
+}
+
+const changePassword = async(req, res)=>{
+  const userID = req.user;
+  const { oldpassword, newpassword } = req.body;
+  try{
+    const user = await User.findById(userID);
+    if(user){
+      const passwordMatch = await bcrypt.compare(oldpassword, user.password);
+      if(passwordMatch){
+        const salt = await bcrypt.genSalt();
+        const data = { password : await bcrypt.hash(newpassword, salt)};
+        await User.findByIdAndUpdate(userID, data, {new: false});
+        res.json({success: 'Password is Changed'});
+      }else{
+        res.json({errors: 'Incorrect Credentials'});
+      }
+    }else{
+      res.json({errors: 'Incorrect Credentials'});
+    }
+  }catch(err){
+    res.json({errors: err});
+  }
+}
+
 
 module.exports = {
-  loginUser, createUser, logoutUser, getUser,
+  loginUser, createUser, logoutUser, getUser, changeUsername, changePassword,
 }

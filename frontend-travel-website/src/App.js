@@ -9,6 +9,7 @@ import PerStory from './pages/PerStory';
 import Register from './pages/Register';
 import EditStory from './pages/EditStory';
 import Alert from './components/Alert';
+import AboutMe from './pages/AboutMe';
 // import Test from './pages/Test';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           {/* <Route path="/test" element={<Test/>}/> */}
           <Route path="/register" element={<Register/>}/>
+          <Route path="/aboutMe" element={<AboutMe/>}/>
           <Route path="/myStory" element={<MyStory/>}/>
           <Route path="/editStory/:storyID" element={<EditStory/>}/>
           <Route path="/addStory" element={<AddStory/>}/>
