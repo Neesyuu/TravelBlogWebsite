@@ -14,6 +14,7 @@ import ImageList from '../components/ImageList';
 function PerStoryLayout() {
     const jwt = localStorage.getItem('jwt');
     const { storyID } = useParams();   
+    const host = process.env.REACT_APP_API_URL;
 
     const dispatch = useDispatch();
     const { isLoading, isError, data } = useSelector(state => state.perStory);
@@ -24,7 +25,6 @@ function PerStoryLayout() {
 
     const checkUser = async ()=>{
         try{
-          const host = "http://localhost:5000";
           const res = await fetch(`${host}/api/getUser`, {
             method: "GET",
             headers: {
@@ -60,7 +60,7 @@ function PerStoryLayout() {
     const countDown = ()=>{
         setTimeout(()=>{
             setShow(true);
-        }, [2000])
+        }, [3000])
     }    
 
     useEffect(()=>{
@@ -129,7 +129,7 @@ function PerStoryLayout() {
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        const host = "http://localhost:5000";
+        const host = process.env.REACT_APP_API_URL;
         const res = await fetch(`${host}/api/comment`, {
         method: "POST",
         headers: {
@@ -185,18 +185,19 @@ function PerStoryLayout() {
                       return (
                         <img
                           key={index}
-                          src={`http://localhost:5000/${image.path}`}
+                          src={`${host}/${image.path}`}
                           alt='thumbnail'
                         />
                       );
                     })
                   : null}
               </div>
-
-              <div className="titleDivs">
+              <div className="edit_percontent">
                 {editable && show && (
-                  <Link to={`/editStory/${storyID}`}><img src={`http://localhost:5000/public/icons/edit_icon.png`} title='Edit the content' alt='edit icon'/></Link>
+                  <Link to={`/editStory/${storyID}`}><img src={`${host}/public/icons/edit_icon.png`} title='Edit the content' alt='edit icon'/></Link>
                 )}
+              </div>
+              <div className="titleDivs">
                 <h4>{storyData.location}</h4>
                 <h1>{storyData.title}</h1>
                 <h4>{dateConverter(storyData.date)}</h4>
@@ -215,10 +216,11 @@ function PerStoryLayout() {
               return (
                 <div key={index}>
                   <div className="mainContent">    
-                    <h4>Story by : {storyData.editorName}</h4>                
+                    <h4>Story by : {storyData.editorName}</h4>
                     <div className='descriptionContent'>{ReactHTMLParser(storyData.tripDescription)}</div>
+                    <h4>Location : {storyData.location}</h4>
                     <h4>Trip Budget : {storyData.budget}</h4>
-                    <h4>Trip Days : {storyData.tripDays}</h4>
+                    <h4>Trip Days : {storyData.tripDays}</h4>             
 
                     <ImageList storyData={storyData} db={true}/>
 

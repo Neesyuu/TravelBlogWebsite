@@ -5,6 +5,7 @@ import { placeMessage, placeMessageType } from '../store/slices/alertSlice';
 import { useDispatch } from 'react-redux';
 
 function RegisterLayout() {
+    const host = process.env.REACT_APP_API_URL;
     const [ credentials, setCrendentials ] = useState({name:"", email: "", password: "", confirmPassword: ""});
     const [ approve, setApprove ] = useState(false);
     // const [ erroroccured, setErroroccured ] = useState({status: "false", message: ""});
@@ -27,7 +28,6 @@ function RegisterLayout() {
 
     const onSubmit = async (e)=>{
         e.preventDefault();
-        const host = "http://localhost:5000";
         const res = await fetch(`${host}/api/signup`, {
             method: "POST",
             headers: {
@@ -61,7 +61,7 @@ function RegisterLayout() {
     
 
   return (
-    <div className="authContent authOverflow" style={{ backgroundImage: `url("http://localhost:5000/public/icons/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+    <div className="authContent authOverflow" style={{ backgroundImage: `url("${host}/public/icons/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <div className="authDiv">
             <form onSubmit={onSubmit}>
                 <div className="inputDiv">

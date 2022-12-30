@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  message: 'Loading ...',
-  type: 'loading',
+  message: '',
+  type: '',
 };
 
 export const alertSlice = createSlice({

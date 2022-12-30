@@ -3,6 +3,7 @@ import "./css/ImageList.css";
 
 function ImageList(props) {
   const { storyData, db, editImage } = props;
+  const host = process.env.REACT_APP_API_URL;
 
   if (db) {
     return (
@@ -13,7 +14,7 @@ function ImageList(props) {
                 <div className="imgList">
                   <img
                     key={index}
-                    src={`http://localhost:5000/${image.path}`}
+                    src={`${host}/${image.path}`}
                     alt='Display all the items'
                   />
                 </div>
@@ -45,7 +46,7 @@ function ImageList(props) {
           {Array.from(storyData).map((item, index) => {
             return (
               <div className="imgList">
-                <img key={index} src={`http://localhost:5000/${item.path}`} alt='Display all the items'/>
+                <img key={index} src={`${host}/${item.path}`} alt='Display all the items'/>
               </div>
             );
           })}

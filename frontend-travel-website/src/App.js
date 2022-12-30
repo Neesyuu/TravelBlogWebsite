@@ -13,6 +13,8 @@ import AboutMe from './pages/AboutMe';
 // import Test from './pages/Test';
 
 function App() {
+  console.log(process.env);
+  console.log(process.env.REACT_APP_API_URL);
   return (
     <div className="App">
       <BrowserRouter>

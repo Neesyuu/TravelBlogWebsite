@@ -16,7 +16,7 @@ function Header() {
   if(jwt){
     const checkUser = async ()=>{
       try{
-        const host = "http://localhost:5000";
+        const host = process.env.REACT_APP_API_URL;
         const res = await fetch(`${host}/api/getUser`, {
           method: "GET",
           headers: {
@@ -37,9 +37,9 @@ function Header() {
 
   const handleLogout = ()=>{
     localStorage.removeItem('jwt');
-    history.push("/");
     dispatch(placeMessage("See Ya"));
     dispatch(placeMessageType('loading'));
+    history.push("/");
   }
  
 

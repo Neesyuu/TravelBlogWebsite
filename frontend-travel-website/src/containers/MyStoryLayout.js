@@ -13,9 +13,9 @@ import AddCard from "../components/AddCard";
 function MyStoryLayout() {
   let history = useNavigate();
   const [storyList, setStoryList] = useState("");
+  const host = process.env.REACT_APP_API_URL;
 
   const callStory = async (token) => {
-    const host = "http://localhost:5000";
     const res = await fetch(`${host}/api/myStory`, {
       method: "GET",
       headers: {

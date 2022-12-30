@@ -8,7 +8,7 @@ const initialState = {
 
 export const fetchComment = createAsyncThunk('story/fetchComment', async (storyID)=>{
     try{
-        const host = "http://localhost:5000";
+        const host = process.env.REACT_APP_API_URL;
         const res = await fetch(`${host}/api/comment/${storyID}`, {
         method: "GET",
         headers: {

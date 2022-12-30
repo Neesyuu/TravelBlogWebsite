@@ -1,5 +1,5 @@
 .card{
-    border: 1px solid #C9F9FB;
+    border: 1px solid #898BC0;
     background: white;
     border-radius: 10px;
     overflow: hidden;
@@ -10,7 +10,7 @@
   }
   
   .card:hover{
-    border: 1px solid #002a2c;
+    border: 1px solid #2e2f5f;
   }
   
   .card-top{

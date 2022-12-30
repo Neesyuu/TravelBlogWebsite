@@ -8,7 +8,7 @@ const initialState = {
 
 export const fetchPerStory = createAsyncThunk('story/fetchPerStory', async (storyID)=>{
     try{
-        const host = "http://localhost:5000";
+        const host = process.env.REACT_APP_API_URL;
         const res = await fetch(`${host}/api/TravelDetails/${storyID}`, {
         method: "GET",
         headers: {

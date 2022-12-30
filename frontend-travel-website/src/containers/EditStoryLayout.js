@@ -33,6 +33,7 @@ function EditStoryLayout() {
   const history = useNavigate();
   const { storyID } = useParams();
   const jwt = localStorage.getItem("jwt");
+  const host = process.env.REACT_APP_API_URL;
 
   // rich text editor
   const editor = useRef(null);
@@ -119,7 +120,6 @@ function EditStoryLayout() {
       });
     }
 
-    const host = "http://localhost:5000";
     axios
       .patch(`${host}/api/TravelDetails/${storyID}`, formData, {
         headers: {
@@ -140,7 +140,7 @@ function EditStoryLayout() {
   };
 
   const deleteHandler = () => {
-    const host = "http://localhost:5000";
+    const host = process.env.REACT_APP_API_URL;
     axios
       .delete(`${host}/api/TravelDetails/${storyID}`, {
         headers: {

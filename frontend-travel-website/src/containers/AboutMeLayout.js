@@ -47,6 +47,7 @@ function a11yProps(index) {
 
 function AboutMeLayout() {
   const jwt = localStorage.getItem("jwt");
+  const host = process.env.REACT_APP_API_URL;
   const history = useNavigate();
   const dispatch = useDispatch();
   const [passcredentials, setPasscrendentials] = useState({
@@ -65,7 +66,7 @@ function AboutMeLayout() {
   };
 
   const getUserInfo = async () => {
-    const res = await fetch(`http://localhost:5000/api/getUser`, {
+    const res = await fetch(`${host}/api/getUser`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +121,7 @@ function AboutMeLayout() {
   const onSubmitUsername = async (e) => {
     e.preventDefault();
 
-    const res = await fetch(`http://localhost:5000/api/cusername`, {
+    const res = await fetch(`${host}/api/cusername`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -146,7 +147,7 @@ function AboutMeLayout() {
   const onSubmitPassword = async (e) => {
     e.preventDefault();
 
-    const res = await fetch(`http://localhost:5000/api/cpass`, {
+    const res = await fetch(`${host}/api/cpass`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -176,13 +177,13 @@ function AboutMeLayout() {
     <>
       <div className="aboutMe_content">
         {/* <div className="bg_aboutMe">
-            <img src="http://localhost:5000/public/icons/auth_bg.jpg" alt="aboutMe"/>
+            <img src="${host}/public/icons/auth_bg.jpg" alt="aboutMe"/>
         </div> */}
         {!loggedIn && (
           <Box
             sx={{
               flexGrow: 1,
-              bgcolor: "#ABE7E9",
+              bgcolor: "#BABCE5",
               display: "flex",
               height: 400,
               borderRadius: "20px",
@@ -212,6 +213,13 @@ function AboutMeLayout() {
                   neesyuu@gmail.com
                 </h1>
               </p>
+              <p style={{position: 'absolute', bottom: '0'}}>
+                <hr style={{border: '1px solid #2e2f5f'}} />
+                <h4 style={{marginTop: '0px'}}>
+                  In this website you can share your travel story so that, world
+                  can know about your experience in that place you visited.
+                </h4>
+              </p>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <p>
@@ -227,7 +235,7 @@ function AboutMeLayout() {
           <Box
             sx={{
               flexGrow: 1,
-              bgcolor: "#ABE7E9",
+              bgcolor: "#BABCE5",
               display: "flex",
               height: 400,
               borderRadius: "20px",

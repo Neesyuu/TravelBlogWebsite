@@ -4,6 +4,7 @@
     font-family: 'Caviar Dreams';
     /* letter-spacing: 3px; */
     font-size: 10px;
+    position: relative;
 }
 
 .aboutMe_content .btnDiv button {
@@ -14,14 +15,14 @@
     border-radius: 5px;
     font-family: 'Paisley Cupcake';
     font-weight: 100;
-    background-color: #8CDFE2;
+    background-color: #898BC0;
     cursor: pointer;
     margin: 10px;
 }
 
 .aboutMe_content .btnDiv button:hover {
-    background-color: #002a2c;
-    color: #8CDFE2;
+    background-color: #2e2f5f;
+    color: #898BC0;
 }
 
 /* .css-2kge1y{

@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 
 function AddCard(props) {
   const { url, editCard, imageURL } = props;
+  const host = process.env.REACT_APP_API_URL;
   if(editCard){
     return (
       <div className="card">
         <Link to={url} style={{ textDecoration: "none" }}>
           <div className="card-top">
             <img
-              src={`http://localhost:5000/public/${imageURL}`}
+              src={`${host}/public/${imageURL}`}
               alt='thumbnail'
             />
           </div>
@@ -35,7 +36,7 @@ function AddCard(props) {
         <div className="card-top">
           <img
             className="addImg"
-            src={`http://localhost:5000/public/icons/addNew.png`}
+            src={`${host}/public/icons/addNew.png`}
             alt='thumbnail'
           />
         </div>

@@ -6,6 +6,7 @@ import { placeMessage, placeMessageType } from '../store/slices/alertSlice';
 import "./css/Auth.css";
 
 function LoginLayout() {
+  const host = process.env.REACT_APP_API_URL;
   const dispatch = useDispatch();
   const [credentials, setCrendentials] = useState({
     name: "",
@@ -27,7 +28,6 @@ function LoginLayout() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const host = "http://localhost:5000";
     const res = await fetch(`${host}/api/login`, {
       method: "POST",
       headers: {
@@ -55,7 +55,7 @@ function LoginLayout() {
   };
 
   return (
-    <div className="authContent" style={{ backgroundImage: `url("http://localhost:5000/public/icons/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+    <div className="authContent" style={{ backgroundImage: `url("${host}/public/icons/auth_bg.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <div className="authDiv">
           <form onSubmit={onSubmit}>
             <div className="inputDiv">

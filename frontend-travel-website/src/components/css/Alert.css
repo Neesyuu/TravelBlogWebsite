@@ -6,18 +6,20 @@
     font-family: 'Paisley Cupcake';
     font-size: 18px;
     letter-spacing: 3px;
+    position: fixed;
+    bottom: 0;
 }
 
 .error{
-    background-image: linear-gradient(transparent 10%, #C9F9FB 20%, #dc3545 80%);
+    background-image: linear-gradient(transparent 10%, #C9CBFB 20%, #dc3545 80%);
 }
 
 .loading{
-    background-image: linear-gradient(transparent 10%, #C9F9FB 20%, #ffc107 80%);
+    background-image: linear-gradient(transparent 10%, #C9CBFB 20%, #ffc107 80%);
 }
 
 .success{
-    background-image: linear-gradient(transparent 10%, #C9F9FB 20%, #28a745 80%);
+    background-image: linear-gradient(transparent 10%, #C9CBFB 20%, #28a745 80%);
 }
 
 .noAlert{

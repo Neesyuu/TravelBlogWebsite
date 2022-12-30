@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 function Card(props) {
   const { storyData, editPage, editImage, thumbImg, location, title } = props;
+  const host = process.env.REACT_APP_API_URL;
 
   if (editPage) {
     if (editImage) {
@@ -32,7 +33,7 @@ function Card(props) {
           <div className="card-top">
             {Array.from(thumbImg).map((item, index) => {
               return (
-                <img key={index} src={`http://localhost:5000/${item.path}`} alt='thumbnail' />
+                <img key={index} src={`${host}/${item.path}`} alt='thumbnail' />
               );
             })}
           </div>
@@ -52,7 +53,7 @@ function Card(props) {
                 return (
                   <img
                     key={index}
-                    src={`http://localhost:5000/${image.path}`}
+                    src={`${host}/${image.path}`}
                     alt='thumbnail'
                   />
                 );

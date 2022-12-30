@@ -15,6 +15,7 @@ function AddStoryLayout() {
   const history = useNavigate();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
+  const host = process.env.REACT_APP_API_URL;
 
   // rich text editor
   const editor = useRef(null);
@@ -53,9 +54,9 @@ function AddStoryLayout() {
     Array.from(image).forEach((item) => {
       formData.append("image", item);
     });
-
+    
     axios
-      .post("http://localhost:5000/api/TravelDetails", formData, {
+      .post(`${host}/api/TravelDetails`, formData, {
         headers: {
           token: jwt,
         },

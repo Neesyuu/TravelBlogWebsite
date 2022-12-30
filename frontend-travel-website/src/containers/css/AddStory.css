@@ -11,7 +11,7 @@
 }
 
 .formBg{
-    background-color: #ABE7E9;
+    background-color: #babce5;
     margin: 0px 50px;
     padding: 30px 0px;
     position: relative;
@@ -29,12 +29,14 @@
     position: absolute;
     right: 22px;
     top: -15px;
+    cursor: pointer;
 }
 
 .formBg .closeBTN{
     position: absolute;
     left: 22px;
     top: -15px;
+    cursor: pointer;
 }
 
 .formBg .closeBTN i, .formBg .deleteBTN i{
@@ -61,8 +63,8 @@
     max-height: 200px;
     min-height: 200px;
     padding: 10px;
-    border: 1px solid #8CDFE2;
-    background-color: #C9F9FB;
+    border: 1px solid #898BC0;
+    background-color: #C9CBFB;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -104,8 +106,8 @@
 .textBox input, .textBox1 input, .textBox2 input{
     padding: 10px;
     /* width: 300px; */
-    border: 1px solid #8CDFE2;
-    background-color: #C9F9FB;
+    border: 1px solid #898BC0;
+    background-color: #C9CBFB;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -137,17 +139,18 @@
     padding: 5px 30px;
     width: 150px;
     font-size: 30px;
-    border: 2px solid #002a2c;
+    border: 2px solid #898BC0;
     border-radius: 5px;
     font-family: 'Paisley Cupcake';
     font-weight: 100;
-    background-color: #8CDFE2;
+    background-color: #898BC0;
     cursor: pointer;
 }
 
 .submitBtn button:hover{
-    background-color: #002a2c;
-    color: #8CDFE2;
+    background-color: #2e2f5f;
+    border: 2px solid #2e2f5f;
+    color: #898BC0;
 }
 
 .deleteBtn{
@@ -169,5 +172,5 @@
 
 .deleteBtn button:hover{
     background-color: #CC1E1D;
-    border: 2px solid #002a2c;
+    border: 2px solid #2e2f5f;
 }
